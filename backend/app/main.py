@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from app.routes import cliente_routes
 from app.routes import fornecedor_routes
+from app.routes import funcionario_routes
 from app.routes import insumo_routes
 
 app = FastAPI(
@@ -11,6 +12,7 @@ app = FastAPI(
 
 app.include_router(cliente_routes.router)
 app.include_router(fornecedor_routes.router)
+app.include_router(funcionario_routes.router)
 app.include_router(insumo_routes.router)
 
 @app.get("/")
