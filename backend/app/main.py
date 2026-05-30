@@ -3,6 +3,7 @@ from app.routes import cliente_routes
 from app.routes import fornecedor_routes
 from app.routes import funcionario_routes
 from app.routes import insumo_routes
+from app.routes import seguradora_routes
 
 app = FastAPI(
     title="CONSERCAR SmartFlow API",
@@ -14,6 +15,7 @@ app.include_router(cliente_routes.router)
 app.include_router(fornecedor_routes.router)
 app.include_router(funcionario_routes.router)
 app.include_router(insumo_routes.router)
+app.include_router(seguradora_routes.router)
 
 @app.get("/")
 def read_root():
