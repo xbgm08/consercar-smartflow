@@ -25,6 +25,11 @@
   margin-bottom: 2rem;
 }
 
+.funcionarios-form-titulo {
+  color: #1e3a8a;
+  margin-bottom: 1rem;
+}
+
 .funcionarios-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -107,6 +112,31 @@
 
 .funcionarios-linha:hover {
   background-color: #f1f5f9;
+}
+
+.funcionarios-td-nome {
+  font-weight: bold;
+  color: #1e3a8a;
+}
+
+.funcionarios-td-cargo {
+  font-weight: bold;
+  color: #64748b;
+}
+
+.funcionarios-th-acoes,
+.funcionarios-td-acoes {
+  text-align: center;
+}
+
+.funcionarios-separador {
+  color: #cbd5e1;
+}
+
+.funcionarios-td-vazia {
+  padding: 2rem;
+  text-align: center;
+  color: #64748b;
 }
 
 .btn-acao-editar {

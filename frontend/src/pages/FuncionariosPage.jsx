@@ -70,7 +70,7 @@ export default function FuncionariosPage() {
 
             {/* Formulário */}
             <div className="funcionarios-card-form">
-                <h2 style={{ color: '#1e3a8a', marginBottom: '1rem' }}>
+                <h2 className="funcionarios-form-titulo">
                     {editId ? 'Editar Funcionário' : 'Novo Funcionário'}
                 </h2>
 
@@ -112,25 +112,25 @@ export default function FuncionariosPage() {
                         <tr>
                             <th>Nome do Técnico</th>
                             <th>Cargo</th>
-                            <th style={{ textAlign: 'center' }}>Ações</th>
+                            <th className="funcionarios-th-acoes">Ações</th>
                         </tr>
                     </thead>
                     <tbody>
                         {funcionarios.length > 0 ? (
                             funcionarios.map((funcionario) => (
                                 <tr key={funcionario.funcionario_key} className="funcionarios-linha">
-                                    <td style={{ fontWeight: 'bold', color: '#1e3a8a' }}>{funcionario.nome_tecnico}</td>
-                                    <td style={{ fontWeight: 'bold', color: '#64748b' }}>{funcionario.cargo}</td>
-                                    <td style={{ textAlign: 'center' }}>
+                                    <td className="funcionarios-td-nome">{funcionario.nome_tecnico}</td>
+                                    <td className="funcionarios-td-cargo">{funcionario.cargo}</td>
+                                    <td className="funcionarios-td-acoes">
                                         <button onClick={() => handleEdit(funcionario)} className="btn-acao-editar">Editar</button>
-                                        <span style={{ color: '#cbd5e1' }}>|</span>
+                                        <span className="funcionarios-separador">|</span>
                                         <button onClick={() => handleDelete(funcionario.funcionario_key)} className="btn-acao-excluir">Excluir</button>
                                     </td>
                                 </tr>
                             ))
                         ) : (
                             <tr>
-                                <td colSpan="3" style={{ padding: '2rem', textAlign: 'center', color: '#64748b' }}>
+                                <td colSpan="3" className="funcionarios-td-vazia">
                                     Nenhum funcionário cadastrado.
                                 </td>
                             </tr>
