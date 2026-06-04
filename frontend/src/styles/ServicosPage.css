@@ -25,6 +25,11 @@
   margin-bottom: 2rem;
 }
 
+.servicos-form-titulo {
+  color: #1e3a8a;
+  margin-bottom: 1rem;
+}
+
 .servicos-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -107,6 +112,26 @@
 
 .servicos-linha:hover {
   background-color: #f1f5f9;
+}
+
+.servicos-td-descricao {
+  font-weight: bold;
+  color: #1e3a8a;
+}
+
+.servicos-th-acoes,
+.servicos-td-acoes {
+  text-align: center;
+}
+
+.servicos-separador {
+  color: #cbd5e1;
+}
+
+.servicos-td-vazia {
+  padding: 2rem;
+  text-align: center;
+  color: #64748b;
 }
 
 .btn-acao-editar {

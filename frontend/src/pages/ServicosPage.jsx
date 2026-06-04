@@ -70,7 +70,7 @@ export default function ServicosPage() {
 
             {/* Formulário */}
             <div className="servicos-card-form">
-                <h2 style={{ color: '#1e3a8a', marginBottom: '1rem' }}>
+                <h2 className="servicos-form-titulo">
                     {editId ? 'Editar Serviço' : 'Novo Serviço'}
                 </h2>
 
@@ -112,25 +112,25 @@ export default function ServicosPage() {
                         <tr>
                             <th>Descrição do Serviço</th>
                             <th>Categoria</th>
-                            <th style={{ textAlign: 'center' }}>Ações</th>
+                            <th className="servicos-th-acoes">Ações</th>
                         </tr>
                     </thead>
                     <tbody>
                         {servicos.length > 0 ? (
                             servicos.map((servico) => (
                                 <tr key={servico.servico_key} className="servicos-linha">
-                                    <td style={{ fontWeight: 'bold', color: '#1e3a8a' }}>{servico.descricao_servico}</td>
+                                    <td className="servicos-td-descricao">{servico.descricao_servico}</td>
                                     <td>{servico.categoria}</td>
-                                    <td style={{ textAlign: 'center' }}>
+                                    <td className="servicos-td-acoes">
                                         <button onClick={() => handleEdit(servico)} className="btn-acao-editar">Editar</button>
-                                        <span style={{ color: '#cbd5e1' }}>|</span>
+                                        <span className="servicos-separador">|</span>
                                         <button onClick={() => handleDelete(servico.servico_key)} className="btn-acao-excluir">Eliminar</button>
                                     </td>
                                 </tr>
                             ))
                         ) : (
                             <tr>
-                                <td colSpan="3" style={{ padding: '2rem', textAlign: 'center', color: '#64748b' }}>
+                                <td colSpan="3" className="servicos-td-vazia">
                                     Nenhum serviço registado. Crie o seu primeiro serviço!
                                 </td>
                             </tr>
