@@ -1,0 +1,128 @@
+.tempo-container {
+  padding: 2rem;
+  background-color: #f8fafc;
+  min-height: 100vh;
+}
+
+.tempo-titulo {
+  color: #1e3a8a;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.tempo-subtitulo {
+  color: #64748b;
+  margin-bottom: 2rem;
+}
+
+/* Formulário */
+.tempo-card-form {
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-top: 4px solid #1e3a8a;
+  margin-bottom: 2rem;
+}
+
+.tempo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.tempo-input {
+  padding: 0.75rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.tempo-input:focus {
+  border-color: #1e3a8a;
+}
+
+.tempo-botoes {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.tempo-btn-salvar {
+  background-color: #1e3a8a;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.tempo-btn-salvar:hover {
+  background-color: #172554;
+}
+
+.tempo-btn-cancelar {
+  background-color: #94a3b8;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.tempo-btn-cancelar:hover {
+  background-color: #64748b;
+}
+
+/* Tabela */
+.tempo-card-tabela {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.tempo-tabela {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.tempo-tabela th {
+  background-color: #1e3a8a;
+  color: white;
+  padding: 1rem;
+}
+
+.tempo-tabela td {
+  padding: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+  color: #334155;
+}
+
+.tempo-linha:hover {
+  background-color: #f1f5f9;
+}
+
+.btn-acao-editar {
+  color: #2563eb;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+.btn-acao-excluir {
+  color: #dc2626;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  margin-left: 0.5rem;
+}
