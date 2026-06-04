@@ -7,10 +7,9 @@ export default function FornecedoresPage() {
     const [formData, setFormData] = useState({
         razao_social: '',
         cnpj: '',
-        telefone: '',
-        email: '',
         tempo_entrega_dias: ''
     });
+
     const [editId, setEditId] = useState(null);
 
     useEffect(() => {
@@ -38,7 +37,7 @@ export default function FornecedoresPage() {
             } else {
                 await api.post('/fornecedores/', formData);
             }
-            setFormData({ razao_social: '', cnpj: '', telefone: '', email: '', tempo_entrega_dias: '' });
+            setFormData({ razao_social: '', cnpj: '', tempo_entrega_dias: '' });
             setEditId(null);
             carregarFornecedores();
         } catch (error) {
@@ -50,8 +49,6 @@ export default function FornecedoresPage() {
         setFormData({
             razao_social: fornecedor.razao_social || '',
             cnpj: fornecedor.cnpj || '',
-            telefone: fornecedor.telefone || '',
-            email: fornecedor.email || '',
             tempo_entrega_dias: fornecedor.tempo_entrega_dias || ''
         });
         setEditId(fornecedor.fornecedor_key);
@@ -88,17 +85,7 @@ export default function FornecedoresPage() {
                         />
                         <input
                             type="text" name="cnpj" placeholder="CNPJ"
-                            value={formData.cnpj} onChange={handleChange} required
-                            className="fornecedores-input"
-                        />
-                        <input
-                            type="text" name="telefone" placeholder="Telefone de Contato"
-                            value={formData.telefone} onChange={handleChange} required
-                            className="fornecedores-input"
-                        />
-                        <input
-                            type="email" name="email" placeholder="E-mail"
-                            value={formData.email} onChange={handleChange} required
+                            value={formData.cnpj} onChange={handleChange} required maxLength="14"
                             className="fornecedores-input"
                         />
                         <input
@@ -112,7 +99,7 @@ export default function FornecedoresPage() {
                         {editId && (
                             <button
                                 type="button"
-                                onClick={() => { setEditId(null); setFormData({ razao_social: '', cnpj: '', telefone: '', email: '', tempo_entrega_dias: '' }) }}
+                                onClick={() => { setEditId(null); setFormData({ razao_social: '', cnpj: '', tempo_entrega_dias: '' }) }}
                                 className="fornecedores-btn-cancelar"
                             >
                                 Cancelar
@@ -132,7 +119,6 @@ export default function FornecedoresPage() {
                         <tr>
                             <th>Razão Social</th>
                             <th>CNPJ</th>
-                            <th>Contato</th>
                             <th>Prazo (Dias)</th>
                             <th style={{ textAlign: 'center' }}>Ações</th>
                         </tr>
@@ -143,7 +129,6 @@ export default function FornecedoresPage() {
                                 <tr key={fornecedor.fornecedor_key} className="fornecedores-linha">
                                     <td style={{ fontWeight: 'bold', color: '#1e3a8a' }}>{fornecedor.razao_social}</td>
                                     <td>{fornecedor.cnpj}</td>
-                                    <td>{fornecedor.telefone} <br /> <span style={{ fontSize: '0.85rem', color: '#64748b' }}>{fornecedor.email}</span></td>
                                     <td>{fornecedor.tempo_entrega_dias}</td>
                                     <td style={{ textAlign: 'center' }}>
                                         <button onClick={() => handleEdit(fornecedor)} className="btn-acao-editar">Editar</button>
@@ -154,7 +139,7 @@ export default function FornecedoresPage() {
                             ))
                         ) : (
                             <tr>
-                                <td colSpan="5" style={{ padding: '2rem', textAlign: 'center', color: '#64748b' }}>
+                                <td colSpan="4" style={{ padding: '2rem', textAlign: 'center', color: '#64748b' }}>
                                     Nenhum fornecedor cadastrado.
                                 </td>
                             </tr>

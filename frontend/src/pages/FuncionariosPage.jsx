@@ -5,12 +5,10 @@ import '../styles/FuncionariosPage.css';
 export default function FuncionariosPage() {
     const [funcionarios, setFuncionarios] = useState([]);
     const [formData, setFormData] = useState({
-        nome: '',
-        cargo: '',
-        cpf: '',
-        telefone: '',
-        email: ''
+        nome_tecnico: '',
+        cargo: ''
     });
+
     const [editId, setEditId] = useState(null);
 
     useEffect(() => {
@@ -38,7 +36,7 @@ export default function FuncionariosPage() {
             } else {
                 await api.post('/funcionarios/', formData);
             }
-            setFormData({ nome: '', cargo: '', cpf: '', telefone: '', email: '' });
+            setFormData({ nome_tecnico: '', cargo: '' });
             setEditId(null);
             carregarFuncionarios();
         } catch (error) {
@@ -48,11 +46,8 @@ export default function FuncionariosPage() {
 
     const handleEdit = (funcionario) => {
         setFormData({
-            nome: funcionario.nome || '',
-            cargo: funcionario.cargo || '',
-            cpf: funcionario.cpf || '',
-            telefone: funcionario.telefone || '',
-            email: funcionario.email || ''
+            nome_tecnico: funcionario.nome_tecnico || '',
+            cargo: funcionario.cargo || ''
         });
         setEditId(funcionario.funcionario_key);
     };
@@ -82,28 +77,13 @@ export default function FuncionariosPage() {
                 <form onSubmit={handleSubmit}>
                     <div className="funcionarios-grid">
                         <input
-                            type="text" name="nome" placeholder="Nome Completo"
-                            value={formData.nome} onChange={handleChange} required
+                            type="text" name="nome_tecnico" placeholder="Nome Completo do Técnico"
+                            value={formData.nome_tecnico} onChange={handleChange} required
                             className="funcionarios-input"
                         />
                         <input
                             type="text" name="cargo" placeholder="Cargo (Ex: Mecânico Chefe)"
                             value={formData.cargo} onChange={handleChange} required
-                            className="funcionarios-input"
-                        />
-                        <input
-                            type="text" name="cpf" placeholder="CPF"
-                            value={formData.cpf} onChange={handleChange} required
-                            className="funcionarios-input"
-                        />
-                        <input
-                            type="text" name="telefone" placeholder="Telefone"
-                            value={formData.telefone} onChange={handleChange} required
-                            className="funcionarios-input"
-                        />
-                        <input
-                            type="email" name="email" placeholder="E-mail"
-                            value={formData.email} onChange={handleChange} required
                             className="funcionarios-input"
                         />
                     </div>
@@ -112,7 +92,7 @@ export default function FuncionariosPage() {
                         {editId && (
                             <button
                                 type="button"
-                                onClick={() => { setEditId(null); setFormData({ nome: '', cargo: '', cpf: '', telefone: '', email: '' }) }}
+                                onClick={() => { setEditId(null); setFormData({ nome_tecnico: '', cargo: '' }) }}
                                 className="funcionarios-btn-cancelar"
                             >
                                 Cancelar
@@ -130,10 +110,8 @@ export default function FuncionariosPage() {
                 <table className="funcionarios-tabela">
                     <thead>
                         <tr>
-                            <th>Nome</th>
+                            <th>Nome do Técnico</th>
                             <th>Cargo</th>
-                            <th>CPF</th>
-                            <th>Contato</th>
                             <th style={{ textAlign: 'center' }}>Ações</th>
                         </tr>
                     </thead>
@@ -141,10 +119,8 @@ export default function FuncionariosPage() {
                         {funcionarios.length > 0 ? (
                             funcionarios.map((funcionario) => (
                                 <tr key={funcionario.funcionario_key} className="funcionarios-linha">
-                                    <td style={{ fontWeight: 'bold', color: '#1e3a8a' }}>{funcionario.nome}</td>
+                                    <td style={{ fontWeight: 'bold', color: '#1e3a8a' }}>{funcionario.nome_tecnico}</td>
                                     <td style={{ fontWeight: 'bold', color: '#64748b' }}>{funcionario.cargo}</td>
-                                    <td>{funcionario.cpf}</td>
-                                    <td>{funcionario.telefone} <br /> <span style={{ fontSize: '0.85rem', color: '#64748b' }}>{funcionario.email}</span></td>
                                     <td style={{ textAlign: 'center' }}>
                                         <button onClick={() => handleEdit(funcionario)} className="btn-acao-editar">Editar</button>
                                         <span style={{ color: '#cbd5e1' }}>|</span>
@@ -154,7 +130,7 @@ export default function FuncionariosPage() {
                             ))
                         ) : (
                             <tr>
-                                <td colSpan="5" style={{ padding: '2rem', textAlign: 'center', color: '#64748b' }}>
+                                <td colSpan="3" style={{ padding: '2rem', textAlign: 'center', color: '#64748b' }}>
                                     Nenhum funcionário cadastrado.
                                 </td>
                             </tr>

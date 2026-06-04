@@ -5,11 +5,10 @@ import '../styles/ServicosPage.css';
 export default function ServicosPage() {
     const [servicos, setServicos] = useState([]);
     const [formData, setFormData] = useState({
-        nome_servico: '',
-        descricao: '',
-        preco_base: '',
-        tempo_estimado_horas: ''
+        descricao_servico: '',
+        categoria: ''
     });
+    
     const [editId, setEditId] = useState(null);
 
     useEffect(() => {
@@ -37,7 +36,7 @@ export default function ServicosPage() {
             } else {
                 await api.post('/servicos/', formData);
             }
-            setFormData({ nome_servico: '', descricao: '', preco_base: '', tempo_estimado_horas: '' });
+            setFormData({ descricao_servico: '', categoria: '' });
             setEditId(null);
             carregarServicos();
         } catch (error) {
@@ -47,10 +46,8 @@ export default function ServicosPage() {
 
     const handleEdit = (servico) => {
         setFormData({
-            nome_servico: servico.nome_servico || '',
-            descricao: servico.descricao || '',
-            preco_base: servico.preco_base || '',
-            tempo_estimado_horas: servico.tempo_estimado_horas || ''
+            descricao_servico: servico.descricao_servico || '',
+            categoria: servico.categoria || ''
         });
         setEditId(servico.servico_key);
     };
@@ -69,7 +66,7 @@ export default function ServicosPage() {
     return (
         <div className="servicos-container">
             <h1 className="servicos-titulo">Catálogo de Serviços</h1>
-            <p className="servicos-subtitulo">Faça a gestão dos serviços prestados, preços base e tempos estimados</p>
+            <p className="servicos-subtitulo">Faça a gestão das categorias e descrições dos serviços da oficina</p>
 
             {/* Formulário */}
             <div className="servicos-card-form">
@@ -80,23 +77,13 @@ export default function ServicosPage() {
                 <form onSubmit={handleSubmit}>
                     <div className="servicos-grid">
                         <input
-                            type="text" name="nome_servico" placeholder="Nome do Serviço (Ex: Revisão Geral)"
-                            value={formData.nome_servico} onChange={handleChange} required
+                            type="text" name="descricao_servico" placeholder="Descrição do Serviço (Ex: Revisão Geral)"
+                            value={formData.descricao_servico} onChange={handleChange} required
                             className="servicos-input"
                         />
                         <input
-                            type="text" name="descricao" placeholder="Descrição / Categoria"
-                            value={formData.descricao} onChange={handleChange} required
-                            className="servicos-input"
-                        />
-                        <input
-                            type="number" step="0.01" name="preco_base" placeholder="Preço Base (R$)"
-                            value={formData.preco_base} onChange={handleChange} required
-                            className="servicos-input"
-                        />
-                        <input
-                            type="number" step="0.1" name="tempo_estimado_horas" placeholder="Tempo Estimado (Horas)"
-                            value={formData.tempo_estimado_horas} onChange={handleChange} required
+                            type="text" name="categoria" placeholder="Categoria (Ex: Mecânica, Pintura)"
+                            value={formData.categoria} onChange={handleChange} required
                             className="servicos-input"
                         />
                     </div>
@@ -105,7 +92,7 @@ export default function ServicosPage() {
                         {editId && (
                             <button
                                 type="button"
-                                onClick={() => { setEditId(null); setFormData({ nome_servico: '', descricao: '', preco_base: '', tempo_estimado_horas: '' }) }}
+                                onClick={() => { setEditId(null); setFormData({ descricao_servico: '', categoria: '' }) }}
                                 className="servicos-btn-cancelar"
                             >
                                 Cancelar
@@ -123,10 +110,8 @@ export default function ServicosPage() {
                 <table className="servicos-tabela">
                     <thead>
                         <tr>
-                            <th>Serviço</th>
-                            <th>Descrição</th>
-                            <th>Preço Base</th>
-                            <th>Tempo Estimado</th>
+                            <th>Descrição do Serviço</th>
+                            <th>Categoria</th>
                             <th style={{ textAlign: 'center' }}>Ações</th>
                         </tr>
                     </thead>
@@ -134,12 +119,8 @@ export default function ServicosPage() {
                         {servicos.length > 0 ? (
                             servicos.map((servico) => (
                                 <tr key={servico.servico_key} className="servicos-linha">
-                                    <td style={{ fontWeight: 'bold', color: '#1e3a8a' }}>{servico.nome_servico}</td>
-                                    <td>{servico.descricao}</td>
-                                    <td style={{ fontWeight: 'bold', color: '#059669' }}>
-                                        R$ {Number(servico.preco_base).toFixed(2)}
-                                    </td>
-                                    <td>{servico.tempo_estimado_horas}h</td>
+                                    <td style={{ fontWeight: 'bold', color: '#1e3a8a' }}>{servico.descricao_servico}</td>
+                                    <td>{servico.categoria}</td>
                                     <td style={{ textAlign: 'center' }}>
                                         <button onClick={() => handleEdit(servico)} className="btn-acao-editar">Editar</button>
                                         <span style={{ color: '#cbd5e1' }}>|</span>
@@ -149,7 +130,7 @@ export default function ServicosPage() {
                             ))
                         ) : (
                             <tr>
-                                <td colSpan="5" style={{ padding: '2rem', textAlign: 'center', color: '#64748b' }}>
+                                <td colSpan="3" style={{ padding: '2rem', textAlign: 'center', color: '#64748b' }}>
                                     Nenhum serviço registado. Crie o seu primeiro serviço!
                                 </td>
                             </tr>

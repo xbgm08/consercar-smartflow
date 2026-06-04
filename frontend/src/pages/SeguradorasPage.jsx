@@ -5,12 +5,11 @@ import '../styles/SeguradorasPage.css';
 export default function SeguradorasPage() {
     const [seguradoras, setSeguradoras] = useState([]);
     const [formData, setFormData] = useState({
-        nome_seguradora: '',
+        razao_social: '',
         cnpj: '',
-        telefone: '',
-        email: '',
-        tempo_aprovacao_dias: ''
+        contato: ''
     });
+
     const [editId, setEditId] = useState(null);
 
     useEffect(() => {
@@ -38,7 +37,7 @@ export default function SeguradorasPage() {
             } else {
                 await api.post('/seguradoras/', formData);
             }
-            setFormData({ nome_seguradora: '', cnpj: '', telefone: '', email: '', tempo_aprovacao_dias: '' });
+            setFormData({ razao_social: '', cnpj: '', contato: '' });
             setEditId(null);
             carregarSeguradoras();
         } catch (error) {
@@ -48,11 +47,9 @@ export default function SeguradorasPage() {
 
     const handleEdit = (seguradora) => {
         setFormData({
-            nome_seguradora: seguradora.nome_seguradora || '',
+            razao_social: seguradora.razao_social || '',
             cnpj: seguradora.cnpj || '',
-            telefone: seguradora.telefone || '',
-            email: seguradora.email || '',
-            tempo_aprovacao_dias: seguradora.tempo_aprovacao_dias || ''
+            contato: seguradora.contato || ''
         });
         setEditId(seguradora.seguradora_key);
     };
@@ -71,7 +68,7 @@ export default function SeguradorasPage() {
     return (
         <div className="seguradoras-container">
             <h1 className="seguradoras-titulo">Gestão de Seguradoras</h1>
-            <p className="seguradoras-subtitulo">Registe as seguradoras parceiras para agilizar aprovações de orçamentos</p>
+            <p className="seguradoras-subtitulo">Registe as seguradoras parceiras da oficina</p>
 
             {/* Formulário */}
             <div className="seguradoras-card-form">
@@ -82,28 +79,18 @@ export default function SeguradorasPage() {
                 <form onSubmit={handleSubmit}>
                     <div className="seguradoras-grid">
                         <input
-                            type="text" name="nome_seguradora" placeholder="Nome da Seguradora"
-                            value={formData.nome_seguradora} onChange={handleChange} required
+                            type="text" name="razao_social" placeholder="Razão Social"
+                            value={formData.razao_social} onChange={handleChange} required
                             className="seguradoras-input"
                         />
                         <input
                             type="text" name="cnpj" placeholder="CNPJ"
-                            value={formData.cnpj} onChange={handleChange} required
+                            value={formData.cnpj} onChange={handleChange} required maxLength="14"
                             className="seguradoras-input"
                         />
                         <input
-                            type="text" name="telefone" placeholder="Telefone"
-                            value={formData.telefone} onChange={handleChange} required
-                            className="seguradoras-input"
-                        />
-                        <input
-                            type="email" name="email" placeholder="E-mail"
-                            value={formData.email} onChange={handleChange} required
-                            className="seguradoras-input"
-                        />
-                        <input
-                            type="number" name="tempo_aprovacao_dias" placeholder="Prazo Médio de Aprovação (Dias)"
-                            value={formData.tempo_aprovacao_dias} onChange={handleChange}
+                            type="text" name="contato" placeholder="Contato (Telefone/Email/Nome)"
+                            value={formData.contato} onChange={handleChange}
                             className="seguradoras-input"
                         />
                     </div>
@@ -112,7 +99,7 @@ export default function SeguradorasPage() {
                         {editId && (
                             <button
                                 type="button"
-                                onClick={() => { setEditId(null); setFormData({ nome_seguradora: '', cnpj: '', telefone: '', email: '', tempo_aprovacao_dias: '' }) }}
+                                onClick={() => { setEditId(null); setFormData({ razao_social: '', cnpj: '', contato: '' }) }}
                                 className="seguradoras-btn-cancelar"
                             >
                                 Cancelar
@@ -130,10 +117,9 @@ export default function SeguradorasPage() {
                 <table className="seguradoras-tabela">
                     <thead>
                         <tr>
-                            <th>Seguradora</th>
+                            <th>Razão Social</th>
                             <th>CNPJ</th>
-                            <th>Contacto</th>
-                            <th>Prazo Aprovação</th>
+                            <th>Contato</th>
                             <th style={{ textAlign: 'center' }}>Ações</th>
                         </tr>
                     </thead>
@@ -141,10 +127,9 @@ export default function SeguradorasPage() {
                         {seguradoras.length > 0 ? (
                             seguradoras.map((seguradora) => (
                                 <tr key={seguradora.seguradora_key} className="seguradoras-linha">
-                                    <td style={{ fontWeight: 'bold', color: '#1e3a8a' }}>{seguradora.nome_seguradora}</td>
+                                    <td style={{ fontWeight: 'bold', color: '#1e3a8a' }}>{seguradora.razao_social}</td>
                                     <td>{seguradora.cnpj}</td>
-                                    <td>{seguradora.telefone} <br /> <span style={{ fontSize: '0.85rem', color: '#64748b' }}>{seguradora.email}</span></td>
-                                    <td>{seguradora.tempo_aprovacao_dias} dias</td>
+                                    <td>{seguradora.contato}</td>
                                     <td style={{ textAlign: 'center' }}>
                                         <button onClick={() => handleEdit(seguradora)} className="btn-acao-editar">Editar</button>
                                         <span style={{ color: '#cbd5e1' }}>|</span>
@@ -154,7 +139,7 @@ export default function SeguradorasPage() {
                             ))
                         ) : (
                             <tr>
-                                <td colSpan="5" style={{ padding: '2rem', textAlign: 'center', color: '#64748b' }}>
+                                <td colSpan="4" style={{ padding: '2rem', textAlign: 'center', color: '#64748b' }}>
                                     Nenhuma seguradora registada.
                                 </td>
                             </tr>
