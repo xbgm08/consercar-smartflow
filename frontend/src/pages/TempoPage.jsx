@@ -5,11 +5,11 @@ import '../styles/TempoPage.css';
 export default function TempoPage() {
     const [tempos, setTempos] = useState([]);
     const [formData, setFormData] = useState({
-        data_completa: '',
-        dia: '',
+        data: '',
+        dia_semana: '',
         mes: '',
-        ano: '',
-        trimestre: ''
+        trimestre: '',
+        ano: ''
     });
     const [editId, setEditId] = useState(null);
 
@@ -33,19 +33,22 @@ export default function TempoPage() {
     const handleDateChange = (e) => {
         const dataSelecionada = e.target.value;
         if (dataSelecionada) {
-            const [ano, mes, dia] = dataSelecionada.split('-');
-            const trimestreCalc = Math.ceil(parseInt(mes) / 3);
+            const dateObj = new Date(dataSelecionada + 'T00:00:00');
+            const diasSemana = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
+            const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+            const numMes = dateObj.getMonth();
+            const trimestreCalc = Math.floor(numMes / 3) + 1;
 
             setFormData({
                 ...formData,
-                data_completa: dataSelecionada,
-                dia: dia,
-                mes: mes,
-                ano: ano,
-                trimestre: trimestreCalc.toString()
+                data: dataSelecionada,
+                dia_semana: diasSemana[dateObj.getDay()],
+                mes: meses[numMes],
+                trimestre: trimestreCalc.toString(),
+                ano: dateObj.getFullYear().toString()
             });
         } else {
-            setFormData({ ...formData, data_completa: '' });
+            setFormData({ data: '', dia_semana: '', mes: '', trimestre: '', ano: '' });
         }
     };
 
@@ -57,7 +60,7 @@ export default function TempoPage() {
             } else {
                 await api.post('/tempo/', formData);
             }
-            setFormData({ data_completa: '', dia: '', mes: '', ano: '', trimestre: '' });
+            setFormData({ data: '', dia_semana: '', mes: '', trimestre: '', ano: '' });
             setEditId(null);
             carregarTempos();
         } catch (error) {
@@ -67,8 +70,8 @@ export default function TempoPage() {
 
     const handleEdit = (tempo) => {
         setFormData({
-            data_completa: tempo.data_completa || '',
-            dia: tempo.dia || '',
+            data: tempo.data || '',
+            dia_semana: tempo.dia_semana || '',
             mes: tempo.mes || '',
             ano: tempo.ano || '',
             trimestre: tempo.trimestre || ''
@@ -92,48 +95,23 @@ export default function TempoPage() {
             <h1 className="tempo-titulo">Gestão de Calendário (Tempo)</h1>
             <p className="tempo-subtitulo">Faça a gestão das datas do seu Data Warehouse para os relatórios</p>
 
-            {/* Formulário */}
             <div className="tempo-card-form">
-                <h2 style={{ color: '#1e3a8a', marginBottom: '1rem' }}>
+                <h2 className="tempo-form-titulo">
                     {editId ? 'Editar Data' : 'Nova Data'}
                 </h2>
 
                 <form onSubmit={handleSubmit}>
                     <div className="tempo-grid">
-                        <input
-                            type="date" name="data_completa"
-                            value={formData.data_completa} onChange={handleDateChange} required
-                            className="tempo-input"
-                        />
-                        <input
-                            type="number" name="dia" placeholder="Dia (1-31)"
-                            value={formData.dia} onChange={handleChange} required
-                            className="tempo-input"
-                        />
-                        <input
-                            type="number" name="mes" placeholder="Mês (1-12)"
-                            value={formData.mes} onChange={handleChange} required
-                            className="tempo-input"
-                        />
-                        <input
-                            type="number" name="ano" placeholder="Ano (Ex: 2026)"
-                            value={formData.ano} onChange={handleChange} required
-                            className="tempo-input"
-                        />
-                        <input
-                            type="number" name="trimestre" placeholder="Trimestre (1-4)"
-                            value={formData.trimestre} onChange={handleChange} required
-                            className="tempo-input"
-                        />
+                        <input type="date" name="data" value={formData.data} onChange={handleDateChange} required className="tempo-input" />
+                        <input type="text" name="dia_semana" placeholder="Dia da Semana" value={formData.dia_semana} onChange={handleChange} required className="tempo-input" />
+                        <input type="text" name="mes" placeholder="Mês" value={formData.mes} onChange={handleChange} required className="tempo-input" />
+                        <input type="number" name="trimestre" placeholder="Trimestre (1-4)" value={formData.trimestre} onChange={handleChange} required className="tempo-input" />
+                        <input type="number" name="ano" placeholder="Ano (Ex: 2026)" value={formData.ano} onChange={handleChange} required className="tempo-input" />
                     </div>
 
                     <div className="tempo-botoes">
                         {editId && (
-                            <button
-                                type="button"
-                                onClick={() => { setEditId(null); setFormData({ data_completa: '', dia: '', mes: '', ano: '', trimestre: '' }) }}
-                                className="tempo-btn-cancelar"
-                            >
+                            <button type="button" onClick={() => { setEditId(null); setFormData({ data: '', dia_semana: '', mes: '', trimestre: '', ano: '' }) }} className="tempo-btn-cancelar">
                                 Cancelar
                             </button>
                         )}
@@ -144,38 +122,37 @@ export default function TempoPage() {
                 </form>
             </div>
 
-            {/* Tabela */}
             <div className="tempo-card-tabela">
                 <table className="tempo-tabela">
                     <thead>
                         <tr>
-                            <th>Data Completa</th>
-                            <th>Dia</th>
+                            <th>Data</th>
+                            <th>Dia da Semana</th>
                             <th>Mês</th>
-                            <th>Ano</th>
                             <th>Trimestre</th>
-                            <th style={{ textAlign: 'center' }}>Ações</th>
+                            <th>Ano</th>
+                            <th className="tempo-th-acoes">Ações</th>
                         </tr>
                     </thead>
                     <tbody>
                         {tempos.length > 0 ? (
                             tempos.map((tempo) => (
                                 <tr key={tempo.tempo_key} className="tempo-linha">
-                                    <td style={{ fontWeight: 'bold', color: '#1e3a8a' }}>{tempo.data_completa}</td>
-                                    <td>{tempo.dia}</td>
+                                    <td className="tempo-td-data">{tempo.data}</td>
+                                    <td>{tempo.dia_semana}</td>
                                     <td>{tempo.mes}</td>
-                                    <td>{tempo.ano}</td>
                                     <td>{tempo.trimestre}º Trim.</td>
-                                    <td style={{ textAlign: 'center' }}>
+                                    <td>{tempo.ano}</td>
+                                    <td className="tempo-td-acoes">
                                         <button onClick={() => handleEdit(tempo)} className="btn-acao-editar">Editar</button>
-                                        <span style={{ color: '#cbd5e1' }}>|</span>
+                                        <span className="tempo-separador">|</span>
                                         <button onClick={() => handleDelete(tempo.tempo_key)} className="btn-acao-excluir">Eliminar</button>
                                     </td>
                                 </tr>
                             ))
                         ) : (
                             <tr>
-                                <td colSpan="6" style={{ padding: '2rem', textAlign: 'center', color: '#64748b' }}>
+                                <td colSpan="6" className="tempo-td-vazia">
                                     Nenhum registo de tempo encontrado no calendário.
                                 </td>
                             </tr>

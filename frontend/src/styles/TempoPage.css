@@ -15,7 +15,6 @@
   margin-bottom: 2rem;
 }
 
-/* Formulário */
 .tempo-card-form {
   background-color: #ffffff;
   padding: 1.5rem;
@@ -23,6 +22,11 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border-top: 4px solid #1e3a8a;
   margin-bottom: 2rem;
+}
+
+.tempo-form-titulo {
+  color: #1e3a8a;
+  margin-bottom: 1rem;
 }
 
 .tempo-grid {
@@ -79,7 +83,6 @@
   background-color: #64748b;
 }
 
-/* Tabela */
 .tempo-card-tabela {
   background-color: #ffffff;
   border-radius: 8px;
@@ -107,6 +110,26 @@
 
 .tempo-linha:hover {
   background-color: #f1f5f9;
+}
+
+.tempo-td-data {
+  font-weight: bold;
+  color: #1e3a8a;
+}
+
+.tempo-th-acoes,
+.tempo-td-acoes {
+  text-align: center;
+}
+
+.tempo-separador {
+  color: #cbd5e1;
+}
+
+.tempo-td-vazia {
+  padding: 2rem;
+  text-align: center;
+  color: #64748b;
 }
 
 .btn-acao-editar {
