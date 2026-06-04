@@ -5,8 +5,7 @@ class DimTempo(Base):
     __tablename__ = "dim_tempo"
     __table_args__ = {"schema": "dw"}
 
-    # Como no DDL não é SERIAL, desabilitamos o autoincrement
-    tempo_key = Column(Integer, primary_key=True, autoincrement=False)
+    tempo_key = Column(Integer, primary_key=True, index=True)
     data = Column(Date, nullable=False)
     dia_semana = Column(String(20))
     mes = Column(String(20))
