@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import ClientesPage from './pages/ClientesPage';
 import FornecedoresPage from './pages/FornecedoresPage';
+import FuncionariosPage from './pages/FuncionariosPage';
 import InsumosPage from './pages/InsumosPage';
 import './styles/App.css';
 
@@ -15,6 +16,7 @@ function App() {
         <div className="navbar-links">
           <Link className="nav-link" to="/clientes">Clientes</Link>
           <Link className="nav-link" to="/fornecedores">Fornecedores</Link>
+          <Link className="nav-link" to="/funcionarios">Funcionários</Link>
           <Link className="nav-link" to="/insumos">Insumos</Link>
         </div>
       </nav>
@@ -23,6 +25,7 @@ function App() {
       <Routes>
         <Route path="/clientes" element={<ClientesPage />} />
         <Route path="/fornecedores" element={<FornecedoresPage />} />
+        <Route path="/funcionarios" element={<FuncionariosPage />} />
         <Route path="/insumos" element={<InsumosPage />} />
         
         {/* Rota Inicial */}
