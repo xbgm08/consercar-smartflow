@@ -1,0 +1,49 @@
+.navbar {
+  background-color: #1e3a8a;
+  padding: 1rem 2rem;
+  display: flex;
+  gap: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  align-items: center;
+}
+
+.navbar-logo {
+  margin: 0;
+  margin-right: 2rem;
+  border-right: 2px solid #3b82f6;
+  padding-right: 1rem;
+  color: white;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.nav-link {
+  color: #93c5fd; /* Azul clarinho */
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.1rem;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: white; 
+}
+
+.home-container {
+  padding: 3rem;
+  text-align: center;
+}
+
+.home-titulo {
+  color: #1e3a8a;
+  margin-bottom: 1rem;
+}
+
+.home-subtitulo {
+  color: #64748b;
+}
