@@ -90,15 +90,15 @@ export default function ClientesPage() {
 
       {/* Formulário */}
       <div className="clientes-card-form">
-        <h2 style={{ color: '#1e3a8a', marginBottom: '1rem' }}>
+        <h2 className="clientes-form-titulo">
           {editId ? 'Editar Cliente' : 'Novo Cliente'}
         </h2>
 
         <form onSubmit={handleSubmit}>
 
           {/* Dados Pessoais */}
-          <h3 style={{ fontSize: '1rem', color: '#64748b', marginBottom: '0.5rem' }}>Dados Pessoais</h3>
-          <div className="clientes-grid" style={{ marginBottom: '1.5rem' }}>
+          <h3 className="clientes-form-section-titulo">Dados Pessoais</h3>
+          <div className="clientes-grid">
             <input
               type="text" name="nome" placeholder="Nome Completo"
               value={formData.nome} onChange={handleChange} required
@@ -122,8 +122,8 @@ export default function ClientesPage() {
           </div>
 
           {/* Endereço */}
-          <h3 style={{ fontSize: '1rem', color: '#64748b', marginBottom: '0.5rem' }}>Endereço</h3>
-          <div className="clientes-grid" style={{ marginBottom: '1.5rem' }}>
+          <h3 className="clientes-form-section-titulo">Endereço</h3>
+          <div className="clientes-grid">
             <input
               type="text" name="cep" placeholder="CEP"
               value={formData.cep} onChange={handleChange} maxLength="8"
@@ -152,7 +152,7 @@ export default function ClientesPage() {
             <input
               type="text" name="uf" placeholder="UF (Ex: SP)"
               value={formData.uf} onChange={handleChange} maxLength="2"
-              className="clientes-input" style={{ textTransform: 'uppercase' }}
+              className="clientes-input clientes-input-uf" 
             />
           </div>
 
@@ -177,7 +177,7 @@ export default function ClientesPage() {
       </div>
 
       {/* Tabela */}
-      <div className="clientes-card-tabela" style={{ overflowX: 'auto' }}>
+      <div className="clientes-card-tabela">
         <table className="clientes-tabela">
           <thead>
             <tr>
@@ -185,30 +185,30 @@ export default function ClientesPage() {
               <th>CPF</th>
               <th>Contato</th>
               <th>Cidade/UF</th>
-              <th style={{ textAlign: 'center' }}>Ações</th>
+              <th className="clientes-th-acoes">Ações</th>
             </tr>
           </thead>
           <tbody>
             {clientes.length > 0 ? (
               clientes.map((cliente) => (
                 <tr key={cliente.cliente_key} className="clientes-linha">
-                  <td style={{ fontWeight: 'bold', color: '#1e3a8a' }}>{cliente.nome}</td>
+                  <td className="clientes-td-nome">{cliente.nome}</td>
                   <td>{cliente.cpf}</td>
                   <td>
                     {cliente.telefone} <br />
-                    <span style={{ fontSize: '0.85rem', color: '#64748b' }}>{cliente.email}</span>
+                    <span className="clientes-td-email">{cliente.email}</span>
                   </td>
                   <td>{cliente.municipio ? `${cliente.municipio} - ${cliente.uf}` : '-'}</td>
-                  <td style={{ textAlign: 'center' }}>
+                  <td className="clientes-td-acoes">
                     <button onClick={() => handleEdit(cliente)} className="btn-acao-editar">Editar</button>
-                    <span style={{ color: '#cbd5e1' }}>|</span>
+                    <span className="clientes-separador">|</span>
                     <button onClick={() => handleDelete(cliente.cliente_key)} className="btn-acao-excluir">Excluir</button>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="5" style={{ padding: '2rem', textAlign: 'center', color: '#64748b' }}>
+                <td colSpan="5" className="clientes-td-vazia">
                   Nenhum cliente encontrado. Comece a efetuar os registos!
                 </td>
               </tr>

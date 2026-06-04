@@ -25,11 +25,22 @@
   margin-bottom: 2rem;
 }
 
+.clientes-form-titulo {
+  color: #1e3a8a;
+  margin-bottom: 1rem;
+}
+
+.clientes-form-section-titulo {
+  font-size: 1rem;
+  color: #64748b;
+  margin-bottom: 0.5rem;
+}
+
 .clientes-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .clientes-input {
@@ -42,6 +53,10 @@
 
 .clientes-input:focus {
   border-color: #1e3a8a;
+}
+
+.clientes-input-uf {
+  text-transform: uppercase;
 }
 
 .clientes-botoes {
@@ -78,6 +93,7 @@
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+  overflow-x: auto;
 }
 
 .clientes-tabela {
@@ -102,6 +118,21 @@
   background-color: #f1f5f9;
 }
 
+.clientes-td-nome {
+  font-weight: bold;
+  color: #1e3a8a;
+}
+
+.clientes-td-email {
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.clientes-th-acoes,
+.clientes-td-acoes {
+  text-align: center;
+}
+
 .btn-acao-editar {
   color: #2563eb;
   background: none;
@@ -118,4 +149,14 @@
   cursor: pointer;
   font-weight: bold;
   margin-left: 0.5rem;
+}
+
+.clientes-separador {
+  color: #cbd5e1;
+}
+
+.clientes-td-vazia {
+  padding: 2rem;
+  text-align: center;
+  color: #64748b;
 }
