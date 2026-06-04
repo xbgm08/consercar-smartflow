@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import ClientesPage from './pages/ClientesPage';
+import InsumosPage from './pages/InsumosPage';
 import './styles/App.css';
 
 function App() {
@@ -12,12 +13,14 @@ function App() {
         
         <div className="navbar-links">
           <Link className="nav-link" to="/clientes">Clientes</Link>
+          <Link className="nav-link" to="/insumos">Insumos</Link>
         </div>
       </nav>
 
       {/* Áreas das Páginas */}
       <Routes>
         <Route path="/clientes" element={<ClientesPage />} />
+        <Route path="/insumos" element={<InsumosPage />} />
         
         {/* Rota Inicial */}
         <Route path="/" element={
