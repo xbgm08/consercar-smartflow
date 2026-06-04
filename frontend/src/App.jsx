@@ -5,6 +5,7 @@ import FornecedoresPage from './pages/FornecedoresPage';
 import FuncionariosPage from './pages/FuncionariosPage';
 import InsumosPage from './pages/InsumosPage';
 import SeguradorasPage from './pages/SeguradorasPage';
+import ServicosPage from './pages/ServicosPage';
 import './styles/App.css';
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
           <Link className="nav-link" to="/funcionarios">Funcionários</Link>
           <Link className="nav-link" to="/insumos">Insumos</Link>
           <Link className="nav-link" to="/seguradoras">Seguradoras</Link>
+          <Link className="nav-link" to="/servicos">Serviços</Link>
         </div>
       </nav>
 
@@ -30,6 +32,7 @@ function App() {
         <Route path="/funcionarios" element={<FuncionariosPage />} />
         <Route path="/insumos" element={<InsumosPage />} />
         <Route path="/seguradoras" element={<SeguradorasPage />} />
+        <Route path="/servicos" element={<ServicosPage />} />
         
         {/* Rota Inicial */}
         <Route path="/" element={
