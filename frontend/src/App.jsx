@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import ClientesPage from './pages/ClientesPage';
+import FornecedoresPage from './pages/FornecedoresPage';
 import InsumosPage from './pages/InsumosPage';
 import './styles/App.css';
 
@@ -13,6 +14,7 @@ function App() {
         
         <div className="navbar-links">
           <Link className="nav-link" to="/clientes">Clientes</Link>
+          <Link className="nav-link" to="/fornecedores">Fornecedores</Link>
           <Link className="nav-link" to="/insumos">Insumos</Link>
         </div>
       </nav>
@@ -20,6 +22,7 @@ function App() {
       {/* Áreas das Páginas */}
       <Routes>
         <Route path="/clientes" element={<ClientesPage />} />
+        <Route path="/fornecedores" element={<FornecedoresPage />} />
         <Route path="/insumos" element={<InsumosPage />} />
         
         {/* Rota Inicial */}
