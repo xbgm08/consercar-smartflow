@@ -25,6 +25,11 @@
   margin-bottom: 2rem;
 }
 
+.insumos-form-titulo {
+  color: #1e3a8a;
+  margin-bottom: 1rem;
+}
+
 .insumos-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -107,6 +112,31 @@
 
 .insumos-linha:hover {
   background-color: #f1f5f9;
+}
+
+.insumos-td-sku {
+  font-weight: bold;
+  color: #64748b;
+}
+
+.insumos-td-nome {
+  font-weight: bold;
+  color: #1e3a8a;
+}
+
+.insumos-th-acoes,
+.insumos-td-acoes {
+  text-align: center;
+}
+
+.insumos-separador {
+  color: #cbd5e1;
+}
+
+.insumos-td-vazia {
+  padding: 2rem;
+  text-align: center;
+  color: #64748b;
 }
 
 .btn-acao-editar {

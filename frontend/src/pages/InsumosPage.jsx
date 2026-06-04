@@ -76,7 +76,7 @@ export default function InsumosPage() {
 
       {/* Cartão do Formulário */}
       <div className="insumos-card-form">
-        <h2 style={{ color: '#1e3a8a', marginBottom: '1rem' }}>
+        <h2 className="insumos-form-titulo">
           {editId ? 'Editar Insumo' : 'Novo Insumo'}
         </h2>
 
@@ -130,27 +130,27 @@ export default function InsumosPage() {
               <th>Nome do Insumo</th>
               <th>Categoria</th>
               <th>Medida</th>
-              <th style={{ textAlign: 'center' }}>Ações</th>
+              <th className="insumos-th-acoes">Ações</th>
             </tr>
           </thead>
           <tbody>
             {insumos.length > 0 ? (
               insumos.map((insumo) => (
                 <tr key={insumo.insumo_key} className="insumos-linha">
-                  <td style={{ fontWeight: 'bold', color: '#64748b' }}>{insumo.codigo_sku}</td>
-                  <td style={{ fontWeight: 'bold', color: '#1e3a8a' }}>{insumo.nome_insumo}</td>
+                  <td className="insumos-td-sku">{insumo.codigo_sku}</td>
+                  <td className="insumos-td-nome">{insumo.nome_insumo}</td>
                   <td>{insumo.categoria}</td>
                   <td>{insumo.unidade_medida}</td>
-                  <td style={{ textAlign: 'center' }}>
+                  <td className="insumos-td-acoes">
                     <button onClick={() => handleEdit(insumo)} className="btn-acao-editar">Editar</button>
-                    <span style={{ color: '#cbd5e1' }}>|</span>
+                    <span className="insumos-separador">|</span>
                     <button onClick={() => handleDelete(insumo.insumo_key)} className="btn-acao-excluir">Excluir</button>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="5" style={{ padding: '2rem', textAlign: 'center', color: '#64748b' }}>
+                <td colSpan="5" className="insumos-td-vazia">
                   O stock está vazio. Registe o seu primeiro insumo!
                 </td>
               </tr>
