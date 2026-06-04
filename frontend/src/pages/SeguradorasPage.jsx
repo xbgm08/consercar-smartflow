@@ -72,7 +72,7 @@ export default function SeguradorasPage() {
 
             {/* Formulário */}
             <div className="seguradoras-card-form">
-                <h2 style={{ color: '#1e3a8a', marginBottom: '1rem' }}>
+                <h2 className="seguradoras-form-titulo">
                     {editId ? 'Editar Seguradora' : 'Nova Seguradora'}
                 </h2>
 
@@ -120,26 +120,26 @@ export default function SeguradorasPage() {
                             <th>Razão Social</th>
                             <th>CNPJ</th>
                             <th>Contato</th>
-                            <th style={{ textAlign: 'center' }}>Ações</th>
+                            <th className="seguradoras-th-acoes">Ações</th>
                         </tr>
                     </thead>
                     <tbody>
                         {seguradoras.length > 0 ? (
                             seguradoras.map((seguradora) => (
                                 <tr key={seguradora.seguradora_key} className="seguradoras-linha">
-                                    <td style={{ fontWeight: 'bold', color: '#1e3a8a' }}>{seguradora.razao_social}</td>
+                                    <td className="seguradoras-td-razao">{seguradora.razao_social}</td>
                                     <td>{seguradora.cnpj}</td>
                                     <td>{seguradora.contato}</td>
-                                    <td style={{ textAlign: 'center' }}>
+                                    <td className="seguradoras-td-acoes">
                                         <button onClick={() => handleEdit(seguradora)} className="btn-acao-editar">Editar</button>
-                                        <span style={{ color: '#cbd5e1' }}>|</span>
+                                        <span className="seguradoras-separador">|</span>
                                         <button onClick={() => handleDelete(seguradora.seguradora_key)} className="btn-acao-excluir">Eliminar</button>
                                     </td>
                                 </tr>
                             ))
                         ) : (
                             <tr>
-                                <td colSpan="4" style={{ padding: '2rem', textAlign: 'center', color: '#64748b' }}>
+                                <td colSpan="4" className="seguradoras-td-vazia">
                                     Nenhuma seguradora registada.
                                 </td>
                             </tr>

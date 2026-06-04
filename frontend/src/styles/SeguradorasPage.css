@@ -25,6 +25,11 @@
   margin-bottom: 2rem;
 }
 
+.seguradoras-form-titulo {
+  color: #1e3a8a;
+  margin-bottom: 1rem;
+}
+
 .seguradoras-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -107,6 +112,26 @@
 
 .seguradoras-linha:hover {
   background-color: #f1f5f9;
+}
+
+.seguradoras-td-razao {
+  font-weight: bold;
+  color: #1e3a8a;
+}
+
+.seguradoras-th-acoes,
+.seguradoras-td-acoes {
+  text-align: center;
+}
+
+.seguradoras-separador {
+  color: #cbd5e1;
+}
+
+.seguradoras-td-vazia {
+  padding: 2rem;
+  text-align: center;
+  color: #64748b;
 }
 
 .btn-acao-editar {
