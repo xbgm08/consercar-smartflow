@@ -72,7 +72,7 @@ export default function FornecedoresPage() {
 
             {/* Formulário */}
             <div className="fornecedores-card-form">
-                <h2 style={{ color: '#1e3a8a', marginBottom: '1rem' }}>
+                <h2 className="fornecedores-form-titulo">
                     {editId ? 'Editar Fornecedor' : 'Novo Fornecedor'}
                 </h2>
 
@@ -120,26 +120,26 @@ export default function FornecedoresPage() {
                             <th>Razão Social</th>
                             <th>CNPJ</th>
                             <th>Prazo (Dias)</th>
-                            <th style={{ textAlign: 'center' }}>Ações</th>
+                            <th className="fornecedores-th-acoes">Ações</th>
                         </tr>
                     </thead>
                     <tbody>
                         {fornecedores.length > 0 ? (
                             fornecedores.map((fornecedor) => (
                                 <tr key={fornecedor.fornecedor_key} className="fornecedores-linha">
-                                    <td style={{ fontWeight: 'bold', color: '#1e3a8a' }}>{fornecedor.razao_social}</td>
+                                    <td className="fornecedores-td-razao">{fornecedor.razao_social}</td>
                                     <td>{fornecedor.cnpj}</td>
                                     <td>{fornecedor.tempo_entrega_dias}</td>
-                                    <td style={{ textAlign: 'center' }}>
+                                    <td className="fornecedores-td-acoes">
                                         <button onClick={() => handleEdit(fornecedor)} className="btn-acao-editar">Editar</button>
-                                        <span style={{ color: '#cbd5e1' }}>|</span>
+                                        <span className="fornecedores-separador">|</span>
                                         <button onClick={() => handleDelete(fornecedor.fornecedor_key)} className="btn-acao-excluir">Excluir</button>
                                     </td>
                                 </tr>
                             ))
                         ) : (
                             <tr>
-                                <td colSpan="4" style={{ padding: '2rem', textAlign: 'center', color: '#64748b' }}>
+                                <td colSpan="4" className="fornecedores-td-vazia">
                                     Nenhum fornecedor cadastrado.
                                 </td>
                             </tr>

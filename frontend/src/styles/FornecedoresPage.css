@@ -25,6 +25,11 @@
   margin-bottom: 2rem;
 }
 
+.fornecedores-form-titulo {
+  color: #1e3a8a;
+  margin-bottom: 1rem;
+}
+
 .fornecedores-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -107,6 +112,26 @@
 
 .fornecedores-linha:hover {
   background-color: #f1f5f9;
+}
+
+.fornecedores-td-razao {
+  font-weight: bold;
+  color: #1e3a8a;
+}
+
+.fornecedores-th-acoes,
+.fornecedores-td-acoes {
+  text-align: center;
+}
+
+.fornecedores-separador {
+  color: #cbd5e1;
+}
+
+.fornecedores-td-vazia {
+  padding: 2rem;
+  text-align: center;
+  color: #64748b;
 }
 
 .btn-acao-editar {
