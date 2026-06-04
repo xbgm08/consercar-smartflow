@@ -52,7 +52,7 @@ export default function ClientesPage() {
       telefone: cliente.telefone || '',
       email: cliente.email || ''
     });
-    setEditId(cliente.cliente_key); // Utilizamos a chave primária do seu modelo
+    setEditId(cliente.cliente_key);
   };
 
   const handleDelete = async (id) => {

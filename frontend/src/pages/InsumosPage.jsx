@@ -12,7 +12,6 @@ export default function InsumosPage() {
   });
   const [editId, setEditId] = useState(null);
 
-  // Executa mal a página abre (GET)
   useEffect(() => {
     carregarInsumos();
   }, []);
@@ -56,7 +55,7 @@ export default function InsumosPage() {
       categoria: insumo.categoria || '',
       unidade_medida: insumo.unidade_medida || ''
     });
-    setEditId(insumo.insumo_key); // Utiliza o ID que vem do seu banco de dados
+    setEditId(insumo.insumo_key);
   };
 
   const handleDelete = async (id) => {
@@ -80,26 +79,26 @@ export default function InsumosPage() {
         <h2 style={{ color: '#1e3a8a', marginBottom: '1rem' }}>
           {editId ? 'Editar Insumo' : 'Novo Insumo'}
         </h2>
-        
+
         <form onSubmit={handleSubmit}>
           <div className="insumos-grid">
-            <input 
-              type="text" name="codigo_sku" placeholder="SKU (Ex: TNT-001)" 
+            <input
+              type="text" name="codigo_sku" placeholder="SKU (Ex: TNT-001)"
               value={formData.codigo_sku} onChange={handleChange} required
               className="insumos-input"
             />
-            <input 
-              type="text" name="nome_insumo" placeholder="Nome (Ex: Tinta Branca)" 
+            <input
+              type="text" name="nome_insumo" placeholder="Nome (Ex: Tinta Branca)"
               value={formData.nome_insumo} onChange={handleChange} required
               className="insumos-input"
             />
-            <input 
-              type="text" name="categoria" placeholder="Categoria (Ex: Pintura)" 
+            <input
+              type="text" name="categoria" placeholder="Categoria (Ex: Pintura)"
               value={formData.categoria} onChange={handleChange} required
               className="insumos-input"
             />
-            <input 
-              type="text" name="unidade_medida" placeholder="Medida (Ex: Litro)" 
+            <input
+              type="text" name="unidade_medida" placeholder="Medida (Ex: Litro)"
               value={formData.unidade_medida} onChange={handleChange} required
               className="insumos-input"
             />
@@ -107,9 +106,9 @@ export default function InsumosPage() {
 
           <div className="insumos-botoes">
             {editId && (
-              <button 
-                type="button" 
-                onClick={() => { setEditId(null); setFormData({codigo_sku: '', nome_insumo: '', categoria: '', unidade_medida: ''}) }}
+              <button
+                type="button"
+                onClick={() => { setEditId(null); setFormData({ codigo_sku: '', nome_insumo: '', categoria: '', unidade_medida: '' }) }}
                 className="insumos-btn-cancelar"
               >
                 Cancelar
