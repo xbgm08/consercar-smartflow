@@ -10,6 +10,7 @@ from app.routes import tempo_routes
 from app.routes import veiculo_routes
 
 from app.routes import fato_alerta_estoque_routes
+from app.routes import fato_consumo_insumo_routes
 from app.routes import fato_servicos_routes
 
 app = FastAPI(
@@ -36,6 +37,7 @@ app.include_router(tempo_routes.router)
 app.include_router(veiculo_routes.router)
 
 app.include_router(fato_alerta_estoque_routes.router)
+app.include_router(fato_consumo_insumo_routes.router)
 app.include_router(fato_servicos_routes.router)
 
 @app.get("/")
