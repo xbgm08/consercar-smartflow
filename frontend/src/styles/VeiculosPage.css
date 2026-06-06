@@ -25,6 +25,11 @@
     margin-bottom: 2rem;
 }
 
+.veiculos-form-titulo {
+    color: #1e3a8a;
+    margin-bottom: 1rem;
+}
+
 .veiculos-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -107,6 +112,26 @@
 
 .veiculos-linha:hover {
     background-color: #f1f5f9;
+}
+
+.veiculos-td-placa {
+    font-weight: bold;
+    color: #1e3a8a;
+}
+
+.veiculos-th-acoes,
+.veiculos-td-acoes {
+    text-align: center;
+}
+
+.veiculos-separador {
+    color: #cbd5e1;
+}
+
+.veiculos-td-vazia {
+    padding: 2rem;
+    text-align: center;
+    color: #64748b;
 }
 
 .btn-acao-editar {

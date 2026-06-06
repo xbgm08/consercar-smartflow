@@ -75,7 +75,7 @@ export default function VeiculosPage() {
 
             {/* Formulário */}
             <div className="veiculos-card-form">
-                <h2 style={{ color: '#1e3a8a', marginBottom: '1rem' }}>
+                <h2 className="veiculos-form-titulo">
                     {editId ? 'Editar Veículo' : 'Novo Veículo'}
                 </h2>
 
@@ -135,28 +135,28 @@ export default function VeiculosPage() {
                             <th>Modelo</th>
                             <th>Ano</th>
                             <th>Cor</th>
-                            <th style={{ textAlign: 'center' }}>Ações</th>
+                            <th className="veiculos-th-acoes">Ações</th>
                         </tr>
                     </thead>
                     <tbody>
                         {veiculos.length > 0 ? (
                             veiculos.map((veiculo) => (
                                 <tr key={veiculo.veiculo_key} className="veiculos-linha">
-                                    <td style={{ fontWeight: 'bold', color: '#1e3a8a' }}>{veiculo.placa}</td>
+                                    <td className="veiculos-td-placa">{veiculo.placa}</td>
                                     <td>{veiculo.marca}</td>
                                     <td>{veiculo.modelo}</td>
                                     <td>{veiculo.ano}</td>
                                     <td>{veiculo.cor}</td>
-                                    <td style={{ textAlign: 'center' }}>
+                                    <td className="veiculos-td-acoes">
                                         <button onClick={() => handleEdit(veiculo)} className="btn-acao-editar">Editar</button>
-                                        <span style={{ color: '#cbd5e1' }}>|</span>
+                                        <span className="veiculos-separador">|</span>
                                         <button onClick={() => handleDelete(veiculo.veiculo_key)} className="btn-acao-excluir">Eliminar</button>
                                     </td>
                                 </tr>
                             ))
                         ) : (
                             <tr>
-                                <td colSpan="6" style={{ padding: '2rem', textAlign: 'center', color: '#64748b' }}>
+                                <td colSpan="6" className="veiculos-td-vazia">
                                     Nenhum veículo registado.
                                 </td>
                             </tr>
