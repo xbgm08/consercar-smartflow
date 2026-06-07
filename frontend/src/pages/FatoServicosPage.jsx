@@ -44,10 +44,10 @@ export default function FatoServicosPage() {
       const resVeiculos = await api.get('/veiculos/');
       setVeiculos(resVeiculos.data);
       
-      const resServicos = await api.get('/servicos/'); 
+      const resServicos = await api.get('/servicos/');
       setServicos(resServicos.data);
       
-      const resFuncionarios = await api.get('/funcionarios/'); 
+      const resFuncionarios = await api.get('/funcionarios/');
       setFuncionarios(resFuncionarios.data);
     } catch (error) {
       console.error("Erro ao carregar dimensões para o formulário", error);
@@ -120,65 +120,66 @@ export default function FatoServicosPage() {
   const getDescricaoServico = (id) => servicos.find(s => s.servico_key === id)?.descricao_servico || id;
 
   return (
-    <div className="clientes-container">
-      <h1 className="clientes-titulo">Ordens de Serviço</h1>
-      <p className="clientes-subtitulo">Registe e gira os serviços (Tabela Fato) realizados na oficina</p>
+    <div className="fato-servicos-container">
+      <h1 className="fato-servicos-titulo">Ordens de Serviço</h1>
+      <p className="fato-servicos-subtitulo">Registe e gira os serviços (Tabela Fato) realizados na oficina</p>
 
       {/* Formulário */}
-      <div className="clientes-card-form">
-        <h2 className="clientes-form-titulo">
+      <div className="fato-servicos-card-form">
+        <h2 className="fato-servicos-form-titulo">
           {editId ? 'Editar Ordem de Serviço' : 'Nova Ordem de Serviço'}
         </h2>
 
         <form onSubmit={handleSubmit}>
-          <h3 className="clientes-form-section-titulo">Identificação (Dimensões)</h3>
-          <div className="clientes-grid">
-            <select name="cliente_key" value={formData.cliente_key} onChange={handleChange} required className="clientes-input">
+
+          <h3 className="fato-servicos-form-section-titulo">Identificação (Dimensões)</h3>
+          <div className="fato-servicos-grid">
+            <select name="cliente_key" value={formData.cliente_key} onChange={handleChange} required className="fato-servicos-input">
               <option value="">Selecione o Cliente</option>
               {clientes.map(c => <option key={c.cliente_key} value={c.cliente_key}>{c.nome}</option>)}
             </select>
 
-            <select name="veiculo_key" value={formData.veiculo_key} onChange={handleChange} required className="clientes-input">
+            <select name="veiculo_key" value={formData.veiculo_key} onChange={handleChange} required className="fato-servicos-input">
               <option value="">Selecione o Veículo</option>
               {veiculos.map(v => <option key={v.veiculo_key} value={v.veiculo_key}>{v.placa} ({v.modelo})</option>)}
             </select>
 
-            <select name="servico_key" value={formData.servico_key} onChange={handleChange} required className="clientes-input">
+            <select name="servico_key" value={formData.servico_key} onChange={handleChange} required className="fato-servicos-input">
               <option value="">Selecione o Serviço</option>
               {servicos.map(s => <option key={s.servico_key} value={s.servico_key}>{s.descricao_servico}</option>)}
             </select>
 
-            <select name="funcionario_key" value={formData.funcionario_key} onChange={handleChange} required className="clientes-input">
+            <select name="funcionario_key" value={formData.funcionario_key} onChange={handleChange} required className="fato-servicos-input">
               <option value="">Técnico Responsável</option>
               {funcionarios.map(f => <option key={f.funcionario_key} value={f.funcionario_key}>{f.nome_tecnico}</option>)}
             </select>
           </div>
 
-          <h3 className="clientes-form-section-titulo">Valores e Métricas (Fatos)</h3>
-          <div className="clientes-grid">
+          <h3 className="fato-servicos-form-section-titulo">Valores e Métricas (Fatos)</h3>
+          <div className="fato-servicos-grid">
             <input
               type="number" step="0.01" name="valor_pecas" placeholder="Valor das Peças (R$)"
               value={formData.valor_pecas} onChange={handleChange} required
-              className="clientes-input"
+              className="fato-servicos-input"
             />
             <input
               type="number" step="0.01" name="custo_mao_obra" placeholder="Custo Mão de Obra (R$)"
               value={formData.custo_mao_obra} onChange={handleChange} required
-              className="clientes-input"
+              className="fato-servicos-input"
             />
             <input
               type="number" step="0.01" name="valor_total_servico" placeholder="Valor Total Cobrado (R$)"
               value={formData.valor_total_servico} onChange={handleChange} required
-              className="clientes-input"
+              className="fato-servicos-input"
             />
             <input
               type="number" name="duracao_servico_dias" placeholder="Duração do Serviço (Dias)"
               value={formData.duracao_servico_dias} onChange={handleChange} required
-              className="clientes-input"
+              className="fato-servicos-input"
             />
           </div>
 
-          <div className="clientes-botoes">
+          <div className="fato-servicos-botoes">
             {editId && (
               <button
                 type="button"
@@ -186,12 +187,12 @@ export default function FatoServicosPage() {
                   setEditId(null);
                   setFormData({ cliente_key: '', veiculo_key: '', servico_key: '', funcionario_key: '', valor_total_servico: '', valor_pecas: '', custo_mao_obra: '', duracao_servico_dias: '' });
                 }}
-                className="clientes-btn-cancelar"
+                className="fato-servicos-btn-cancelar"
               >
                 Cancelar
               </button>
             )}
-            <button type="submit" className="clientes-btn-salvar">
+            <button type="submit" className="fato-servicos-btn-salvar">
               {editId ? 'Atualizar Serviço' : 'Guardar Serviço'}
             </button>
           </div>
@@ -199,8 +200,8 @@ export default function FatoServicosPage() {
       </div>
 
       {/* Tabela */}
-      <div className="clientes-card-tabela">
-        <table className="clientes-tabela">
+      <div className="fato-servicos-card-tabela">
+        <table className="fato-servicos-tabela">
           <thead>
             <tr>
               <th>ID Serviço</th>
@@ -208,28 +209,28 @@ export default function FatoServicosPage() {
               <th>Serviço Executado</th>
               <th>Valor Total</th>
               <th>Dias</th>
-              <th className="clientes-th-acoes">Ações</th>
+              <th className="fato-servicos-th-acoes">Ações</th>
             </tr>
           </thead>
           <tbody>
             {fatos.length > 0 ? (
               fatos.map((fato) => (
-                <tr key={fato.fato_key} className="clientes-linha">
-                  <td className="clientes-td-nome"># {fato.fato_key}</td>
+                <tr key={fato.fato_key} className="fato-servicos-linha">
+                  <td className="fato-servicos-td-destaque"># {fato.fato_key}</td>
                   <td>{getNomeCliente(fato.cliente_key)}</td>
                   <td>{getDescricaoServico(fato.servico_key)}</td>
                   <td>R$ {fato.valor_total_servico}</td>
                   <td>{fato.duracao_servico_dias}</td>
-                  <td className="clientes-td-acoes">
+                  <td className="fato-servicos-td-acoes">
                     <button onClick={() => handleEdit(fato)} className="btn-acao-editar">Editar</button>
-                    <span className="clientes-separador">|</span>
+                    <span className="fato-servicos-separador">|</span>
                     <button onClick={() => handleDelete(fato.fato_key)} className="btn-acao-excluir">Excluir</button>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="6" className="clientes-td-vazia">
+                <td colSpan="6" className="fato-servicos-td-vazia">
                   Nenhuma ordem de serviço encontrada.
                 </td>
               </tr>
