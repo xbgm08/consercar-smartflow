@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from app.config.database import get_db
 from app.controllers.fato_consumo_insumo_controller import FatoConsumoInsumoController
 
-router = APIRouter(prefix="/api/fatos-consumo", tags=["Fato Consumo Insumos"])
+router = APIRouter(prefix="/api/fato-consumo", tags=["Fato Consumo Insumos"])
 
 def get_consumo_controller(db: Session = Depends(get_db)):
     return FatoConsumoInsumoController(db)

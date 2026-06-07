@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from app.config.database import get_db
 from app.controllers.fato_alerta_estoque_controller import FatoAlertaEstoqueController
 
-router = APIRouter(prefix="/api/fatos-alerta", tags=["Fato Alerta Estoque"])
+router = APIRouter(prefix="/api/fato-alerta", tags=["Fato Alerta Estoque"])
 
 def get_alerta_controller(db: Session = Depends(get_db)):
     return FatoAlertaEstoqueController(db)

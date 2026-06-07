@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from app.config.database import get_db
 from app.controllers.fato_servicos_controller import FatoServicosController
 
-router = APIRouter(prefix="/api/fatos-servicos", tags=["Fato Serviços"])
+router = APIRouter(prefix="/api/fato-servicos", tags=["Fato Serviços"])
 
 # Injeção de dependência para instanciar o Service com a conexão do banco
 def get_fato_servicos_controller(db: Session = Depends(get_db)):
