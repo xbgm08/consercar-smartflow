@@ -13,6 +13,8 @@ from app.routes import fato_alerta_estoque_routes
 from app.routes import fato_consumo_insumo_routes
 from app.routes import fato_servicos_routes
 
+from app.routes import ia_estoque_routes as ia_estoque
+
 app = FastAPI(
     title="CONSERCAR SmartFlow API",
     description="API para gestão de estoque e predição de insumos - CONSERCAR",
@@ -39,6 +41,8 @@ app.include_router(veiculo_routes.router)
 app.include_router(fato_alerta_estoque_routes.router)
 app.include_router(fato_consumo_insumo_routes.router)
 app.include_router(fato_servicos_routes.router)
+
+app.include_router(ia_estoque.router)
 
 @app.get("/")
 def read_root():
