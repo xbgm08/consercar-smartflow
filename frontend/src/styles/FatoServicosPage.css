@@ -1,0 +1,181 @@
+.fato-servicos-container {
+  padding: 2rem;
+  background-color: #f8fafc;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+.fato-servicos-titulo {
+  color: #1e3a8a;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.fato-servicos-subtitulo {
+  color: #64748b;
+  margin-bottom: 2rem;
+}
+
+.fato-servicos-card-form {
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-top: 4px solid #1e3a8a;
+  margin-bottom: 2rem;
+}
+
+.fato-servicos-form-titulo {
+  color: #1e3a8a;
+  margin-bottom: 1rem;
+}
+
+.fato-servicos-form-section-titulo {
+  font-size: 1rem;
+  color: #64748b;
+  margin-bottom: 0.5rem;
+  margin-top: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 0.25rem;
+}
+
+.fato-servicos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.fato-servicos-input {
+  padding: 0.75rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  font-size: 1rem;
+  outline: none;
+  background-color: #ffffff;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+select.fato-servicos-input {
+  cursor: pointer;
+}
+
+.fato-servicos-input:focus {
+  border-color: #1e3a8a;
+  box-shadow: 0 0 0 2px rgba(30, 58, 138, 0.1);
+}
+
+.fato-servicos-botoes {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.fato-servicos-btn-salvar {
+  background-color: #1e3a8a;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.fato-servicos-btn-salvar:hover {
+  background-color: #172554;
+}
+
+.fato-servicos-btn-cancelar {
+  background-color: #94a3b8;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.fato-servicos-btn-cancelar:hover {
+  background-color: #64748b;
+}
+
+.fato-servicos-card-tabela {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  overflow-x: auto;
+}
+
+.fato-servicos-tabela {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.fato-servicos-tabela th {
+  background-color: #1e3a8a;
+  color: white;
+  padding: 1rem;
+  font-weight: 600;
+}
+
+.fato-servicos-tabela td {
+  padding: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+  color: #334155;
+}
+
+.fato-servicos-linha:hover {
+  background-color: #f1f5f9;
+}
+
+.fato-servicos-td-destaque {
+  font-weight: bold;
+  color: #1e3a8a;
+}
+
+.fato-servicos-th-acoes,
+.fato-servicos-td-acoes {
+  text-align: center;
+}
+
+.btn-acao-editar {
+  color: #2563eb;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+.btn-acao-editar:hover {
+  text-decoration: underline;
+}
+
+.btn-acao-excluir {
+  color: #dc2626;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  margin-left: 0.5rem;
+}
+
+.btn-acao-excluir:hover {
+  text-decoration: underline;
+}
+
+.fato-servicos-separador {
+  color: #cbd5e1;
+}
+
+.fato-servicos-td-vazia {
+  padding: 3rem;
+  text-align: center;
+  color: #64748b;
+  font-style: italic;
+}
