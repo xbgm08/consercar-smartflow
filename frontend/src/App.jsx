@@ -9,6 +9,7 @@ import ServicosPage from './pages/ServicosPage';
 import TempoPage from './pages/TempoPage';
 import VeiculosPage from './pages/VeiculosPage';
 import FatoServicosPage from './pages/FatoServicosPage';
+import FatoConsumoPage from './pages/FatoConsumoPage';
 import './styles/App.css';
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
           <Link className="nav-link" to="/tempo">Tempo</Link>
           <Link className="nav-link" to="/veiculos">Veículos</Link>
           <Link className="nav-link" to="/ordens-servico">Ordens de Serviço</Link>
+          <Link className="nav-link" to="/consumo-insumos">Consumo de Insumos</Link>
         </div>
       </nav>
 
@@ -42,7 +44,7 @@ function App() {
         <Route path="/tempo" element={<TempoPage />} />
         <Route path="/veiculos" element={<VeiculosPage />} />
         <Route path="/ordens-servico" element={<FatoServicosPage />} />
-
+        <Route path="/consumo-insumos" element={<FatoConsumoPage />} />
         {/* Rota Inicial */}
         <Route path="/" element={
           <div className="home-container">
