@@ -41,6 +41,11 @@ class IAEstoqueService:
 
         estoque_projetado = float(estoque_atual) - consumo_projetado_semana
 
+        dados_grafico = {
+            "historico": [{"dia": int(d[0]), "consumo": float(c)} for d, c in zip(X_passado, y_passado)],
+            "previsao": [{"dia": int(d[0]), "consumo": float(c)} for d, c in zip(X_futuro, previsao_7_dias)]
+        }
+
         if estoque_projetado < margem_seguranca:
             sugestao = float(margem_seguranca - estoque_projetado + 5.0)
             
@@ -58,12 +63,14 @@ class IAEstoqueService:
                 "status": "alerta_gerado",
                 "consumo_previsto_7_dias": round(consumo_projetado_semana, 2),
                 "estoque_projetado_final": round(estoque_projetado, 2),
-                "sugestao_compra": round(sugestao, 2)
+                "sugestao_compra": round(sugestao, 2),
+                "grafico": dados_grafico
             }
         
         return {
             "status": "estoque_saudavel",
             "consumo_previsto_7_dias": round(consumo_projetado_semana, 2),
             "estoque_projetado_final": round(estoque_projetado, 2),
-            "mensagem": "Nenhuma compra necessária por agora."
+            "mensagem": "Nenhuma compra necessária por agora.",
+            "grafico": dados_grafico
         }
