@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS dw.Dim_Funcionario (
 );
 
 CREATE TABLE IF NOT EXISTS dw.Dim_Tempo (
-    tempo_key SERIAL PRIMARY KEY,
+    tempo_key INTEGER PRIMARY KEY,
     data DATE NOT NULL,
     dia_semana VARCHAR(20),
     mes VARCHAR(20),
