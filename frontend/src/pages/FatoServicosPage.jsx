@@ -76,7 +76,7 @@ export default function FatoServicosPage() {
         valor_total_servico: parseFloat(formData.valor_total_servico),
         valor_pecas: parseFloat(formData.valor_pecas),
         custo_mao_obra: parseFloat(formData.custo_mao_obra),
-        duracao_servico_dias: parseInt(formData.duracao_servico_dias),
+        duracao_servico_dias: formData.duracao_servico_dias !== '' ? parseInt(formData.duracao_servico_dias) : null,
         tempo_key: parseInt(new Date().toISOString().slice(0, 10).replace(/-/g, ''))
       };
 
@@ -93,6 +93,11 @@ export default function FatoServicosPage() {
       setEditId(null);
       carregarFatos();
     } catch (error) {
+      if (error.response && error.response.data && error.response.data.detail) {
+        alert(error.response.data.detail);
+      } else {
+        alert("Erro inesperado ao guardar a ordem de serviço.");
+      }
       console.error("Erro ao guardar ordem de serviço", error);
     }
   };
@@ -107,7 +112,7 @@ export default function FatoServicosPage() {
       valor_total_servico: fato.valor_total_servico || '',
       valor_pecas: fato.valor_pecas || '',
       custo_mao_obra: fato.custo_mao_obra || '',
-      duracao_servico_dias: fato.duracao_servico_dias || ''
+      duracao_servico_dias: fato.duracao_servico_dias !== null ? fato.duracao_servico_dias : ''
     });
     setEditId(fato.fato_key);
   };
@@ -189,8 +194,8 @@ export default function FatoServicosPage() {
               className="fato-servicos-input"
             />
             <input
-              type="number" name="duracao_servico_dias" placeholder="Duração do Serviço (Dias)"
-              value={formData.duracao_servico_dias} onChange={handleChange} required
+              type="number" name="duracao_servico_dias" placeholder="Duração (Dias) - Deixe vazio se em andamento"
+              value={formData.duracao_servico_dias} onChange={handleChange}
               className="fato-servicos-input"
             />
           </div>
@@ -224,7 +229,7 @@ export default function FatoServicosPage() {
               <th>Cliente</th>
               <th>Serviço Executado</th>
               <th>Valor Total</th>
-              <th>Dias</th>
+              <th>Status / Dias</th>
               <th className="fato-servicos-th-acoes">Ações</th>
             </tr>
           </thead>
@@ -236,7 +241,17 @@ export default function FatoServicosPage() {
                   <td>{getNomeCliente(fato.cliente_key)}</td>
                   <td>{getDescricaoServico(fato.servico_key)}</td>
                   <td>R$ {fato.valor_total_servico}</td>
-                  <td>{fato.duracao_servico_dias}</td>
+                  
+                  <td>
+                    {fato.duracao_servico_dias !== null ? (
+                      `${fato.duracao_servico_dias} dias`
+                    ) : (
+                      <span style={{ color: '#d97706', fontWeight: 'bold', backgroundColor: '#fef3c7', padding: '4px 8px', borderRadius: '4px', fontSize: '0.85em' }}>
+                        ⏳ Em andamento
+                      </span>
+                    )}
+                  </td>
+
                   <td className="fato-servicos-td-acoes">
                     <button onClick={() => handleEdit(fato)} className="btn-acao-editar">Editar</button>
                     <span className="fato-servicos-separador">|</span>
