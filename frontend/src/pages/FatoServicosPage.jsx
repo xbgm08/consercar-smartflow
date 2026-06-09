@@ -8,12 +8,14 @@ export default function FatoServicosPage() {
   const [veiculos, setVeiculos] = useState([]);
   const [servicos, setServicos] = useState([]);
   const [funcionarios, setFuncionarios] = useState([]);
+  const [seguradoras, setSeguradoras] = useState([]);
 
   const [formData, setFormData] = useState({
     cliente_key: '',
     veiculo_key: '',
     servico_key: '',
     funcionario_key: '',
+    seguradora_key: '',
     valor_total_servico: '',
     valor_pecas: '',
     custo_mao_obra: '',
@@ -40,15 +42,18 @@ export default function FatoServicosPage() {
     try {
       const resClientes = await api.get('/clientes/');
       setClientes(resClientes.data);
-      
+
       const resVeiculos = await api.get('/veiculos/');
       setVeiculos(resVeiculos.data);
-      
+
       const resServicos = await api.get('/servicos/');
       setServicos(resServicos.data);
-      
+
       const resFuncionarios = await api.get('/funcionarios/');
       setFuncionarios(resFuncionarios.data);
+
+      const resSeguradoras = await api.get('/seguradoras/');
+      setSeguradoras(resSeguradoras.data);
     } catch (error) {
       console.error("Erro ao carregar dimensões para o formulário", error);
     }
@@ -67,11 +72,12 @@ export default function FatoServicosPage() {
         veiculo_key: parseInt(formData.veiculo_key),
         servico_key: parseInt(formData.servico_key),
         funcionario_key: parseInt(formData.funcionario_key),
+        seguradora_key: parseInt(formData.seguradora_key),
         valor_total_servico: parseFloat(formData.valor_total_servico),
         valor_pecas: parseFloat(formData.valor_pecas),
         custo_mao_obra: parseFloat(formData.custo_mao_obra),
         duracao_servico_dias: parseInt(formData.duracao_servico_dias),
-        tempo_key: parseInt(new Date().toISOString().slice(0, 10).replace(/-/g, '')) 
+        tempo_key: parseInt(new Date().toISOString().slice(0, 10).replace(/-/g, ''))
       };
 
       if (editId) {
@@ -81,7 +87,7 @@ export default function FatoServicosPage() {
       }
 
       setFormData({
-        cliente_key: '', veiculo_key: '', servico_key: '', funcionario_key: '',
+        cliente_key: '', veiculo_key: '', servico_key: '', funcionario_key: '', seguradora_key: '',
         valor_total_servico: '', valor_pecas: '', custo_mao_obra: '', duracao_servico_dias: ''
       });
       setEditId(null);
@@ -97,6 +103,7 @@ export default function FatoServicosPage() {
       veiculo_key: fato.veiculo_key || '',
       servico_key: fato.servico_key || '',
       funcionario_key: fato.funcionario_key || '',
+      seguradora_key: fato.seguradora_key || '',
       valor_total_servico: fato.valor_total_servico || '',
       valor_pecas: fato.valor_pecas || '',
       custo_mao_obra: fato.custo_mao_obra || '',
@@ -153,6 +160,15 @@ export default function FatoServicosPage() {
               <option value="">Técnico Responsável</option>
               {funcionarios.map(f => <option key={f.funcionario_key} value={f.funcionario_key}>{f.nome_tecnico}</option>)}
             </select>
+
+            <select name="seguradora_key" value={formData.seguradora_key} onChange={handleChange} className="fato-servicos-input">
+              <option value="">Sem Seguradora (Particular)</option>
+              {seguradoras.map(seg => (
+                <option key={seg.seguradora_key} value={seg.seguradora_key}>
+                  {seg.nome || seg.razao_social || `Seguradora #${seg.seguradora_key}`}
+                </option>
+              ))}
+            </select>
           </div>
 
           <h3 className="fato-servicos-form-section-titulo">Valores e Métricas (Fatos)</h3>
@@ -185,7 +201,7 @@ export default function FatoServicosPage() {
                 type="button"
                 onClick={() => {
                   setEditId(null);
-                  setFormData({ cliente_key: '', veiculo_key: '', servico_key: '', funcionario_key: '', valor_total_servico: '', valor_pecas: '', custo_mao_obra: '', duracao_servico_dias: '' });
+                  setFormData({ cliente_key: '', veiculo_key: '', servico_key: '', funcionario_key: '', seguradora_key: '', valor_total_servico: '', valor_pecas: '', custo_mao_obra: '', duracao_servico_dias: '' });
                 }}
                 className="fato-servicos-btn-cancelar"
               >
