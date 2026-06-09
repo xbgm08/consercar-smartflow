@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
 from app.models.dim_tempo import DimTempo
+from datetime import date
 
 class TempoController:
     def __init__(self, db: Session):
@@ -12,6 +13,14 @@ class TempoController:
         return self.db.query(DimTempo).filter(DimTempo.tempo_key == id).first()
 
     def create(self, dados: dict):
+        data_valor = dados.get('data')
+        
+        if data_valor:
+            if isinstance(data_valor, str):
+                dados['tempo_key'] = int(data_valor.replace('-', ''))
+            elif isinstance(data_valor, date):
+                dados['tempo_key'] = int(data_valor.strftime('%Y%m%d'))
+
         novo = DimTempo(**dados)
         self.db.add(novo)
         self.db.commit()
