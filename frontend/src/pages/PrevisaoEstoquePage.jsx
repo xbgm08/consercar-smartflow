@@ -11,10 +11,18 @@ export default function PrevisaoEstoquePage() {
   const [resultadoIA, setResultadoIA] = useState(null);
   const [dadosGrafico, setDadosGrafico] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [popup, setPopup] = useState({ visivel: false, mensagem: '', tipo: '' });
 
   useEffect(() => {
     carregarInsumos();
   }, []);
+
+  const mostrarPopup = (mensagem, tipo) => {
+    setPopup({ visivel: true, mensagem, tipo });
+    setTimeout(() => {
+      setPopup({ visivel: false, mensagem: '', tipo: '' });
+    }, 3000);
+  };
 
   const carregarInsumos = async () => {
     try {
@@ -39,7 +47,7 @@ export default function PrevisaoEstoquePage() {
       setResultadoIA(response.data);
       prepararDadosGrafico(response.data.grafico);
     } catch (error) {
-      alert("Erro ao rodar a IA ou histórico insuficiente.");
+      mostrarPopup("Erro ao rodar a IA ou histórico insuficiente.", "erro");
       console.error(error);
     } finally {
       setLoading(false);
@@ -68,8 +76,29 @@ export default function PrevisaoEstoquePage() {
     setDadosGrafico(dadosFormatados);
   };
 
+  const popupStyle = {
+    position: 'fixed',
+    top: '20px',
+    right: '20px',
+    padding: '15px 25px',
+    borderRadius: '8px',
+    color: 'white',
+    fontWeight: 'bold',
+    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+    zIndex: 1000,
+    transition: 'opacity 0.3s ease-in-out',
+    opacity: popup.visivel ? 1 : 0,
+    pointerEvents: popup.visivel ? 'auto' : 'none',
+    backgroundColor: popup.tipo === 'sucesso' ? '#427A77' : '#dc2626',
+  };
+
   return (
     <div className="fato-servicos-container">
+      <div style={popupStyle}>
+        {popup.tipo === 'sucesso' ? '✅ ' : '⚠️ '}
+        {popup.mensagem}
+      </div>
+
       <h1 className="fato-servicos-titulo">Inteligência Artificial</h1>
       <p className="fato-servicos-subtitulo">Previsão de Estoque e Análise de Demanda com Regressão Linear</p>
 
@@ -162,7 +191,7 @@ export default function PrevisaoEstoquePage() {
                   type="monotone" 
                   name="Histórico Real" 
                   dataKey="ConsumoReal" 
-                  stroke="#1e3a8a" 
+                  stroke="#427A77" 
                   strokeWidth={3} 
                   activeDot={{ r: 8 }} 
                 />

@@ -9,7 +9,8 @@ export default function FatoConsumoPage() {
   const [insumos, setInsumos] = useState([]);
   const [fornecedores, setFornecedores] = useState([]);
   const [funcionarios, setFuncionarios] = useState([]);
-
+  const [editId, setEditId] = useState(null);
+  const [popup, setPopup] = useState({ visivel: false, mensagem: '', tipo: '' });
   const [formData, setFormData] = useState({
     servico_key: '',
     veiculo_key: '',
@@ -23,12 +24,18 @@ export default function FatoConsumoPage() {
     custo_total_insumo: ''
   });
 
-  const [editId, setEditId] = useState(null);
 
   useEffect(() => {
     carregarFatos();
     carregarDimensoes();
   }, []);
+
+  const mostrarPopup = (mensagem, tipo) => {
+    setPopup({ visivel: true, mensagem, tipo });
+    setTimeout(() => {
+      setPopup({ visivel: false, mensagem: '', tipo: '' });
+    }, 3000);
+  };
 
   const carregarFatos = async () => {
     try {
@@ -43,13 +50,13 @@ export default function FatoConsumoPage() {
     try {
       const resServicos = await api.get('/servicos/');
       setServicos(resServicos.data);
-      
+
       const resVeiculos = await api.get('/veiculos/');
       setVeiculos(resVeiculos.data);
-      
+
       const resInsumos = await api.get('/insumos/');
       setInsumos(resInsumos.data);
-      
+
       const resFornecedores = await api.get('/fornecedores/');
       setFornecedores(resFornecedores.data);
 
@@ -62,7 +69,7 @@ export default function FatoConsumoPage() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    
+
     setFormData(prev => {
       const newData = { ...prev, [name]: value };
       if (name === 'quantidade_real' || name === 'custo_unitario') {
@@ -91,13 +98,15 @@ export default function FatoConsumoPage() {
         desperdicio: parseFloat(formData.desperdicio),
         custo_unitario: parseFloat(formData.custo_unitario),
         custo_total_insumo: parseFloat(formData.custo_total_insumo),
-        tempo_key: parseInt(new Date().toISOString().slice(0, 10).replace(/-/g, '')) 
+        tempo_key: parseInt(new Date().toISOString().slice(0, 10).replace(/-/g, ''))
       };
 
       if (editId) {
         await api.put(`/fato-consumo/${editId}`, payload);
+        mostrarPopup('Registo de consumo atualizado com sucesso!', 'sucesso');
       } else {
         await api.post('/fato-consumo/', payload);
+        mostrarPopup('Registo de consumo gravado com sucesso!', 'sucesso');
       }
 
       setFormData({
@@ -107,6 +116,8 @@ export default function FatoConsumoPage() {
       setEditId(null);
       carregarFatos();
     } catch (error) {
+      const msgErro = error.response?.data?.detail || "Erro inesperado ao salvar o registo de consumo.";
+      mostrarPopup(msgErro, 'erro');
       console.error("Erro ao salvar registo de consumo", error);
     }
   };
@@ -131,9 +142,11 @@ export default function FatoConsumoPage() {
     if (window.confirm("Tem a certeza que deseja excluir este registo de consumo?")) {
       try {
         await api.delete(`/fato-consumo/${id}`);
+        mostrarPopup('Registo de consumo excluido com sucesso!', 'sucesso');
         carregarFatos();
       } catch (error) {
-        console.error("Erro ao eliminar", error);
+        mostrarPopup('Erro ao excluir o registo de consumo.', 'erro');
+        console.error("Erro ao excluir registo de consumo", error);
       }
     }
   };
@@ -141,8 +154,30 @@ export default function FatoConsumoPage() {
   const getNomeInsumo = (id) => insumos.find(i => i.insumo_key === id)?.nome_insumo || id;
   const getDescricaoServico = (id) => servicos.find(s => s.servico_key === id)?.descricao_servico || id;
 
+  const popupStyle = {
+    position: 'fixed',
+    top: '20px',
+    right: '20px',
+    padding: '15px 25px',
+    borderRadius: '8px',
+    color: 'white',
+    fontWeight: 'bold',
+    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+    zIndex: 1000,
+    transition: 'opacity 0.3s ease-in-out',
+    opacity: popup.visivel ? 1 : 0,
+    pointerEvents: popup.visivel ? 'auto' : 'none',
+    backgroundColor: popup.tipo === 'sucesso' ? '#0f766e' : '#dc2626',
+  };
+
   return (
     <div className="fato-consumo-container">
+
+      <div style={popupStyle}>
+        {popup.tipo === 'sucesso' ? '✅ ' : '⚠️ '}
+        {popup.mensagem}
+      </div>
+
       <h1 className="fato-consumo-titulo">Consumo de Insumos</h1>
       <p className="fato-consumo-subtitulo">Registe os materiais gastos nos serviços para alimentar a IA</p>
 

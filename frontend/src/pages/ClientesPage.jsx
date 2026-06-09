@@ -4,6 +4,8 @@ import '../styles/ClientesPage.css';
 
 export default function ClientesPage() {
   const [clientes, setClientes] = useState([]);
+  const [editId, setEditId] = useState(null);
+  const [popup, setPopup] = useState({ visivel: false, mensagem: '', tipo: '' });
   const [formData, setFormData] = useState({
     nome: '',
     cpf: '',
@@ -17,11 +19,16 @@ export default function ClientesPage() {
     uf: ''
   });
 
-  const [editId, setEditId] = useState(null);
-
   useEffect(() => {
     carregarClientes();
   }, []);
+
+  const mostrarPopup = (mensagem, tipo) => {
+    setPopup({ visivel: true, mensagem, tipo });
+    setTimeout(() => {
+      setPopup({ visivel: false, mensagem: '', tipo: '' });
+    }, 3000);
+  };
 
   const carregarClientes = async () => {
     try {
@@ -41,8 +48,10 @@ export default function ClientesPage() {
     try {
       if (editId) {
         await api.put(`/clientes/${editId}`, formData);
+        mostrarPopup('Cliente atualizado com sucesso!', 'sucesso');
       } else {
         await api.post('/clientes/', formData);
+        mostrarPopup('Cliente gravado com sucesso!', 'sucesso');
       }
 
       setFormData({
@@ -52,7 +61,9 @@ export default function ClientesPage() {
       setEditId(null);
       carregarClientes();
     } catch (error) {
-      console.error("Erro ao salvar cliente", error);
+      const msgErro = error.response?.data?.detail || "Erro ao gravar cliente. Verifique os dados.";
+      mostrarPopup(msgErro, 'erro');
+      console.error("Erro ao gravar cliente", error);
     }
   };
 
@@ -76,15 +87,39 @@ export default function ClientesPage() {
     if (window.confirm("Tem a certeza que deseja excluir este cliente?")) {
       try {
         await api.delete(`/clientes/${id}`);
+        mostrarPopup('Cliente excluido com sucesso!', 'sucesso');
         carregarClientes();
       } catch (error) {
-        console.error("Erro ao eliminar", error);
+        mostrarPopup("Erro ao excluir cliente. Pode estar associado a um serviço.", 'erro');
+        console.error("Erro ao excluir cliente", error);
       }
     }
   };
 
+  const popupStyle = {
+    position: 'fixed',
+    top: '20px',
+    right: '20px',
+    padding: '15px 25px',
+    borderRadius: '8px',
+    color: 'white',
+    fontWeight: 'bold',
+    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+    zIndex: 1000,
+    transition: 'opacity 0.3s ease-in-out',
+    opacity: popup.visivel ? 1 : 0,
+    pointerEvents: popup.visivel ? 'auto' : 'none',
+    backgroundColor: popup.tipo === 'sucesso' ? '#0f766e' : '#dc2626',
+  };
+
   return (
     <div className="clientes-container">
+      
+      <div style={popupStyle}>
+        {popup.tipo === 'sucesso' ? '✅ ' : '⚠️ '}
+        {popup.mensagem}
+      </div>
+
       <h1 className="clientes-titulo">Gestão de Clientes</h1>
       <p className="clientes-subtitulo">Registe e gira os dados dos clientes da oficina</p>
 

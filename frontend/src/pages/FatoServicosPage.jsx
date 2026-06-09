@@ -9,7 +9,8 @@ export default function FatoServicosPage() {
   const [servicos, setServicos] = useState([]);
   const [funcionarios, setFuncionarios] = useState([]);
   const [seguradoras, setSeguradoras] = useState([]);
-
+  const [editId, setEditId] = useState(null);
+  const [popup, setPopup] = useState({ visivel: false, mensagem: '', tipo: '' });
   const [formData, setFormData] = useState({
     cliente_key: '',
     veiculo_key: '',
@@ -22,12 +23,17 @@ export default function FatoServicosPage() {
     duracao_servico_dias: ''
   });
 
-  const [editId, setEditId] = useState(null);
-
   useEffect(() => {
     carregarFatos();
     carregarDimensoes();
   }, []);
+
+  const mostrarPopup = (mensagem, tipo) => {
+    setPopup({ visivel: true, mensagem, tipo });
+    setTimeout(() => {
+      setPopup({ visivel: false, mensagem: '', tipo: '' });
+    }, 3000);
+  };
 
   const carregarFatos = async () => {
     try {
@@ -72,7 +78,7 @@ export default function FatoServicosPage() {
         veiculo_key: parseInt(formData.veiculo_key),
         servico_key: parseInt(formData.servico_key),
         funcionario_key: parseInt(formData.funcionario_key),
-        seguradora_key: parseInt(formData.seguradora_key),
+        seguradora_key: formData.seguradora_key ? parseInt(formData.seguradora_key) : null,
         valor_total_servico: parseFloat(formData.valor_total_servico),
         valor_pecas: parseFloat(formData.valor_pecas),
         custo_mao_obra: parseFloat(formData.custo_mao_obra),
@@ -82,8 +88,10 @@ export default function FatoServicosPage() {
 
       if (editId) {
         await api.put(`/fato-servicos/${editId}`, payload);
+        mostrarPopup('Ordem de serviço atualizada com sucesso!', 'sucesso');
       } else {
         await api.post('/fato-servicos/', payload);
+        mostrarPopup('Ordem de serviço gravada com sucesso!', 'sucesso');
       }
 
       setFormData({
@@ -93,11 +101,8 @@ export default function FatoServicosPage() {
       setEditId(null);
       carregarFatos();
     } catch (error) {
-      if (error.response && error.response.data && error.response.data.detail) {
-        alert(error.response.data.detail);
-      } else {
-        alert("Erro inesperado ao salvar a ordem de serviço.");
-      }
+      const msgErro = error.response?.data?.detail || "Erro inesperado ao salvar a ordem de serviço.";
+      mostrarPopup(msgErro, 'erro');
       console.error("Erro ao salvar ordem de serviço", error);
     }
   };
@@ -121,9 +126,11 @@ export default function FatoServicosPage() {
     if (window.confirm("Tem a certeza que deseja excluir esta Ordem de Serviço?")) {
       try {
         await api.delete(`/fato-servicos/${id}`);
+        mostrarPopup('Ordem de serviço excluida com sucesso!', 'sucesso');
         carregarFatos();
       } catch (error) {
-        console.error("Erro ao eliminar", error);
+        mostrarPopup('Erro ao excluir a ordem de serviço.', 'erro');
+        console.error("Erro ao excluir ordem de serviço", error);
       }
     }
   };
@@ -131,8 +138,30 @@ export default function FatoServicosPage() {
   const getNomeCliente = (id) => clientes.find(c => c.cliente_key === id)?.nome || id;
   const getDescricaoServico = (id) => servicos.find(s => s.servico_key === id)?.descricao_servico || id;
 
+  const popupStyle = {
+    position: 'fixed',
+    top: '20px',
+    right: '20px',
+    padding: '15px 25px',
+    borderRadius: '8px',
+    color: 'white',
+    fontWeight: 'bold',
+    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+    zIndex: 1000,
+    transition: 'opacity 0.3s ease-in-out',
+    opacity: popup.visivel ? 1 : 0,
+    pointerEvents: popup.visivel ? 'auto' : 'none',
+    backgroundColor: popup.tipo === 'sucesso' ? '#0f766e' : '#dc2626',
+  };
+
   return (
     <div className="fato-servicos-container">
+      
+      <div style={popupStyle}>
+        {popup.tipo === 'sucesso' ? '✅ ' : '⚠️ '}
+        {popup.mensagem}
+      </div>
+
       <h1 className="fato-servicos-titulo">Ordens de Serviço</h1>
       <p className="fato-servicos-subtitulo">Registe e gira os serviços (Tabela Fato) realizados na oficina</p>
 

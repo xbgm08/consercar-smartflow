@@ -4,6 +4,8 @@ import '../styles/TempoPage.css';
 
 export default function TempoPage() {
     const [tempos, setTempos] = useState([]);
+    const [editId, setEditId] = useState(null);
+    const [popup, setPopup] = useState({ visivel: false, mensagem: '', tipo: '' });
     const [formData, setFormData] = useState({
         data: '',
         dia_semana: '',
@@ -11,11 +13,17 @@ export default function TempoPage() {
         trimestre: '',
         ano: ''
     });
-    const [editId, setEditId] = useState(null);
 
     useEffect(() => {
         carregarTempos();
     }, []);
+
+    const mostrarPopup = (mensagem, tipo) => {
+        setPopup({ visivel: true, mensagem, tipo });
+        setTimeout(() => {
+            setPopup({ visivel: false, mensagem: '', tipo: '' });
+        }, 3000);
+    };
 
     const carregarTempos = async () => {
         try {
@@ -57,13 +65,17 @@ export default function TempoPage() {
         try {
             if (editId) {
                 await api.put(`/tempo/${editId}`, formData);
+                mostrarPopup('Data atualizada com sucesso!', 'sucesso');
             } else {
                 await api.post('/tempo/', formData);
+                mostrarPopup('Data gravada com sucesso!', 'sucesso');
             }
             setFormData({ data: '', dia_semana: '', mes: '', trimestre: '', ano: '' });
             setEditId(null);
             carregarTempos();
         } catch (error) {
+            const msgErro = error.response?.data?.detail || "Erro ao salvar data.";
+            mostrarPopup(msgErro, 'erro');
             console.error("Erro ao salvar data", error);
         }
     };
@@ -80,18 +92,41 @@ export default function TempoPage() {
     };
 
     const handleDelete = async (id) => {
-        if (window.confirm("Tem a certeza que deseja eliminar este registo de tempo?")) {
+        if (window.confirm("Tem a certeza que deseja excluir este registo de tempo?")) {
             try {
                 await api.delete(`/tempo/${id}`);
+                mostrarPopup('Data excluída com sucesso!', 'sucesso');
                 carregarTempos();
             } catch (error) {
-                console.error("Erro ao eliminar", error);
+                mostrarPopup('Erro ao excluir data.', 'erro');
+                console.error("Erro ao excluir data", error);
             }
         }
     };
 
+    const popupStyle = {
+        position: 'fixed',
+        top: '20px',
+        right: '20px',
+        padding: '15px 25px',
+        borderRadius: '8px',
+        color: 'white',
+        fontWeight: 'bold',
+        boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+        zIndex: 1000,
+        transition: 'opacity 0.3s ease-in-out',
+        opacity: popup.visivel ? 1 : 0,
+        pointerEvents: popup.visivel ? 'auto' : 'none',
+        backgroundColor: popup.tipo === 'sucesso' ? '#427A77' : '#dc2626',
+    };
+
     return (
         <div className="tempo-container">
+            <div style={popupStyle}>
+                {popup.tipo === 'sucesso' ? '✅ ' : '⚠️ '}
+                {popup.mensagem}
+            </div>
+
             <h1 className="tempo-titulo">Gestão de Calendário (Tempo)</h1>
             <p className="tempo-subtitulo">Faça a gestão das datas do seu Data Warehouse para os relatórios</p>
 
@@ -146,7 +181,7 @@ export default function TempoPage() {
                                     <td className="tempo-td-acoes">
                                         <button onClick={() => handleEdit(tempo)} className="btn-acao-editar">Editar</button>
                                         <span className="tempo-separador">|</span>
-                                        <button onClick={() => handleDelete(tempo.tempo_key)} className="btn-acao-excluir">Eliminar</button>
+                                        <button onClick={() => handleDelete(tempo.tempo_key)} className="btn-acao-excluir">Excluir</button>
                                     </td>
                                 </tr>
                             ))

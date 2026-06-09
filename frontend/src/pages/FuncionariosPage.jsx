@@ -4,16 +4,23 @@ import '../styles/FuncionariosPage.css';
 
 export default function FuncionariosPage() {
     const [funcionarios, setFuncionarios] = useState([]);
+    const [editId, setEditId] = useState(null);
+    const [popup, setPopup] = useState({ visivel: false, mensagem: '', tipo: '' });
     const [formData, setFormData] = useState({
         nome_tecnico: '',
         cargo: ''
     });
 
-    const [editId, setEditId] = useState(null);
-
     useEffect(() => {
         carregarFuncionarios();
     }, []);
+
+    const mostrarPopup = (mensagem, tipo) => {
+        setPopup({ visivel: true, mensagem, tipo });
+        setTimeout(() => {
+            setPopup({ visivel: false, mensagem: '', tipo: '' });
+        }, 3000);
+    };
 
     const carregarFuncionarios = async () => {
         try {
@@ -33,13 +40,17 @@ export default function FuncionariosPage() {
         try {
             if (editId) {
                 await api.put(`/funcionarios/${editId}`, formData);
+                mostrarPopup('Funcionário atualizado com sucesso!', 'sucesso');
             } else {
                 await api.post('/funcionarios/', formData);
+                mostrarPopup('Funcionário gravado com sucesso!', 'sucesso');
             }
             setFormData({ nome_tecnico: '', cargo: '' });
             setEditId(null);
             carregarFuncionarios();
         } catch (error) {
+            const msgErro = error.response?.data?.detail || "Erro ao salvar funcionário.";
+            mostrarPopup(msgErro, 'erro');
             console.error("Erro ao salvar funcionário", error);
         }
     };
@@ -56,15 +67,39 @@ export default function FuncionariosPage() {
         if (window.confirm("Tem a certeza que deseja excluir este funcionário?")) {
             try {
                 await api.delete(`/funcionarios/${id}`);
+                mostrarPopup('Funcionário excluído com sucesso!', 'sucesso');
                 carregarFuncionarios();
             } catch (error) {
-                console.error("Erro ao eliminar", error);
+                mostrarPopup('Erro ao excluir funcionário.', 'erro');
+                console.error("Erro ao excluir funcionário", error);
             }
         }
     };
 
+    const popupStyle = {
+        position: 'fixed',
+        top: '20px',
+        right: '20px',
+        padding: '15px 25px',
+        borderRadius: '8px',
+        color: 'white',
+        fontWeight: 'bold',
+        boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+        zIndex: 1000,
+        transition: 'opacity 0.3s ease-in-out',
+        opacity: popup.visivel ? 1 : 0,
+        pointerEvents: popup.visivel ? 'auto' : 'none',
+        backgroundColor: popup.tipo === 'sucesso' ? '#0f766e' : '#dc2626',
+    };
+
     return (
         <div className="funcionarios-container">
+
+            <div style={popupStyle}>
+                {popup.tipo === 'sucesso' ? '✅ ' : '⚠️ '}
+                {popup.mensagem}
+            </div>
+
             <h1 className="funcionarios-titulo">Gestão de Funcionários</h1>
             <p className="funcionarios-subtitulo">Cadastre mecânicos, pintores e gestores da sua oficina</p>
 

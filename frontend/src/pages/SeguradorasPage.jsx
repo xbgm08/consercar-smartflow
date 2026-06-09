@@ -4,17 +4,24 @@ import '../styles/SeguradorasPage.css';
 
 export default function SeguradorasPage() {
     const [seguradoras, setSeguradoras] = useState([]);
+    const [editId, setEditId] = useState(null);
+    const [popup, setPopup] = useState({ visivel: false, mensagem: '', tipo: '' });
     const [formData, setFormData] = useState({
         razao_social: '',
         cnpj: '',
         contato: ''
     });
 
-    const [editId, setEditId] = useState(null);
-
     useEffect(() => {
         carregarSeguradoras();
     }, []);
+
+    const mostrarPopup = (mensagem, tipo) => {
+        setPopup({ visivel: true, mensagem, tipo });
+        setTimeout(() => {
+            setPopup({ visivel: false, mensagem: '', tipo: '' });
+        }, 3000);
+    };
 
     const carregarSeguradoras = async () => {
         try {
@@ -34,13 +41,17 @@ export default function SeguradorasPage() {
         try {
             if (editId) {
                 await api.put(`/seguradoras/${editId}`, formData);
+                mostrarPopup('Seguradora atualizada com sucesso!', 'sucesso');
             } else {
                 await api.post('/seguradoras/', formData);
+                mostrarPopup('Seguradora gravada com sucesso!', 'sucesso');
             }
             setFormData({ razao_social: '', cnpj: '', contato: '' });
             setEditId(null);
             carregarSeguradoras();
         } catch (error) {
+            const msgErro = error.response?.data?.detail || "Erro ao salvar seguradora.";
+            mostrarPopup(msgErro, 'erro');
             console.error("Erro ao salvar seguradora", error);
         }
     };
@@ -55,18 +66,41 @@ export default function SeguradorasPage() {
     };
 
     const handleDelete = async (id) => {
-        if (window.confirm("Tem a certeza que deseja eliminar esta seguradora?")) {
+        if (window.confirm("Tem a certeza que deseja excluir esta seguradora?")) {
             try {
                 await api.delete(`/seguradoras/${id}`);
+                mostrarPopup('Seguradora excluída com sucesso!', 'sucesso');
                 carregarSeguradoras();
             } catch (error) {
-                console.error("Erro ao eliminar", error);
+                mostrarPopup('Erro ao excluir seguradora.', 'erro');
+                console.error("Erro ao excluir seguradora", error);
             }
         }
     };
 
+    const popupStyle = {
+        position: 'fixed',
+        top: '20px',
+        right: '20px',
+        padding: '15px 25px',
+        borderRadius: '8px',
+        color: 'white',
+        fontWeight: 'bold',
+        boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+        zIndex: 1000,
+        transition: 'opacity 0.3s ease-in-out',
+        opacity: popup.visivel ? 1 : 0,
+        pointerEvents: popup.visivel ? 'auto' : 'none',
+        backgroundColor: popup.tipo === 'sucesso' ? '#427A77' : '#dc2626',
+    };
+
     return (
         <div className="seguradoras-container">
+            <div style={popupStyle}>
+                {popup.tipo === 'sucesso' ? '✅ ' : '⚠️ '}
+                {popup.mensagem}
+            </div>
+
             <h1 className="seguradoras-titulo">Gestão de Seguradoras</h1>
             <p className="seguradoras-subtitulo">Registe as seguradoras parceiras da oficina</p>
 
@@ -133,7 +167,7 @@ export default function SeguradorasPage() {
                                     <td className="seguradoras-td-acoes">
                                         <button onClick={() => handleEdit(seguradora)} className="btn-acao-editar">Editar</button>
                                         <span className="seguradoras-separador">|</span>
-                                        <button onClick={() => handleDelete(seguradora.seguradora_key)} className="btn-acao-excluir">Eliminar</button>
+                                        <button onClick={() => handleDelete(seguradora.seguradora_key)} className="btn-acao-excluir">Excluir</button>
                                     </td>
                                 </tr>
                             ))

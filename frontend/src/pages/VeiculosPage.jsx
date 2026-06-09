@@ -4,6 +4,8 @@ import '../styles/VeiculosPage.css';
 
 export default function VeiculosPage() {
     const [veiculos, setVeiculos] = useState([]);
+    const [editId, setEditId] = useState(null);
+    const [popup, setPopup] = useState({ visivel: false, mensagem: '', tipo: '' });
     const [formData, setFormData] = useState({
         placa: '',
         chassi: '',
@@ -12,11 +14,17 @@ export default function VeiculosPage() {
         ano: '',
         tipo_veiculo: ''
     });
-    const [editId, setEditId] = useState(null);
 
     useEffect(() => {
         carregarVeiculos();
     }, []);
+
+    const mostrarPopup = (mensagem, tipo) => {
+        setPopup({ visivel: true, mensagem, tipo });
+        setTimeout(() => {
+            setPopup({ visivel: false, mensagem: '', tipo: '' });
+        }, 3000);
+    };
 
     const carregarVeiculos = async () => {
         try {
@@ -36,13 +44,17 @@ export default function VeiculosPage() {
         try {
             if (editId) {
                 await api.put(`/veiculos/${editId}`, formData);
+                mostrarPopup('Veículo atualizado com sucesso!', 'sucesso');
             } else {
                 await api.post('/veiculos/', formData);
+                mostrarPopup('Veículo salvo com sucesso!', 'sucesso');
             }
             setFormData({ placa: '', chassi: '', marca: '', modelo: '', ano: '', tipo_veiculo: '' });
             setEditId(null);
             carregarVeiculos();
         } catch (error) {
+            const msgErro = error.response?.data?.detail || "Erro ao salvar veículo.";
+            mostrarPopup(msgErro, 'erro');
             console.error("Erro ao salvar veículo", error);
         }
     };
@@ -60,18 +72,41 @@ export default function VeiculosPage() {
     };
 
     const handleDelete = async (id) => {
-        if (window.confirm("Tem a certeza que deseja eliminar este veículo?")) {
+        if (window.confirm("Tem a certeza que deseja excluir este veículo?")) {
             try {
                 await api.delete(`/veiculos/${id}`);
+                mostrarPopup('Veículo excluído com sucesso!', 'sucesso');
                 carregarVeiculos();
             } catch (error) {
-                console.error("Erro ao eliminar", error);
+                mostrarPopup('Erro ao excluir veículo.', 'erro');
+                console.error("Erro ao excluir veículo", error);
             }
         }
     };
 
+    const popupStyle = {
+        position: 'fixed',
+        top: '20px',
+        right: '20px',
+        padding: '15px 25px',
+        borderRadius: '8px',
+        color: 'white',
+        fontWeight: 'bold',
+        boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+        zIndex: 1000,
+        transition: 'opacity 0.3s ease-in-out',
+        opacity: popup.visivel ? 1 : 0,
+        pointerEvents: popup.visivel ? 'auto' : 'none',
+        backgroundColor: popup.tipo === 'sucesso' ? '#427A77' : '#dc2626',
+    };
+
     return (
         <div className="veiculos-container">
+            <div style={popupStyle}>
+                {popup.tipo === 'sucesso' ? '✅ ' : '⚠️ '}
+                {popup.mensagem}
+            </div>
+
             <h1 className="veiculos-titulo">Gestão de Veículos</h1>
             <p className="veiculos-subtitulo">Registe os dados dos automóveis associados aos serviços da oficina</p>
 
@@ -162,7 +197,7 @@ export default function VeiculosPage() {
                                     <td className="veiculos-td-acoes">
                                         <button onClick={() => handleEdit(veiculo)} className="btn-acao-editar">Editar</button>
                                         <span className="veiculos-separador">|</span>
-                                        <button onClick={() => handleDelete(veiculo.veiculo_key)} className="btn-acao-excluir">Eliminar</button>
+                                        <button onClick={() => handleDelete(veiculo.veiculo_key)} className="btn-acao-excluir">Excluir</button>
                                     </td>
                                 </tr>
                             ))

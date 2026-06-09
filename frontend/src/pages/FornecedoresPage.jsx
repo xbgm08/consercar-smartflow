@@ -4,17 +4,24 @@ import '../styles/FornecedoresPage.css';
 
 export default function FornecedoresPage() {
     const [fornecedores, setFornecedores] = useState([]);
+    const [editId, setEditId] = useState(null);
+    const [popup, setPopup] = useState({ visivel: false, mensagem: '', tipo: '' });
     const [formData, setFormData] = useState({
         razao_social: '',
         cnpj: '',
         tempo_entrega_dias: ''
     });
 
-    const [editId, setEditId] = useState(null);
-
     useEffect(() => {
         carregarFornecedores();
     }, []);
+
+    const mostrarPopup = (mensagem, tipo) => {
+        setPopup({ visivel: true, mensagem, tipo });
+        setTimeout(() => {
+            setPopup({ visivel: false, mensagem: '', tipo: '' });
+        }, 3000);
+    };
 
     const carregarFornecedores = async () => {
         try {
@@ -34,13 +41,17 @@ export default function FornecedoresPage() {
         try {
             if (editId) {
                 await api.put(`/fornecedores/${editId}`, formData);
+                mostrarPopup('Fornecedor atualizado com sucesso!', 'sucesso');
             } else {
                 await api.post('/fornecedores/', formData);
+                mostrarPopup('Fornecedor gravado com sucesso!', 'sucesso');
             }
             setFormData({ razao_social: '', cnpj: '', tempo_entrega_dias: '' });
             setEditId(null);
             carregarFornecedores();
         } catch (error) {
+            const msgErro = error.response?.data?.detail || "Erro ao salvar fornecedor.";
+            mostrarPopup(msgErro, 'erro');
             console.error("Erro ao salvar fornecedor", error);
         }
     };
@@ -58,15 +69,39 @@ export default function FornecedoresPage() {
         if (window.confirm("Tem a certeza que deseja excluir este fornecedor?")) {
             try {
                 await api.delete(`/fornecedores/${id}`);
+                mostrarPopup('Fornecedor excluído com sucesso!', 'sucesso');
                 carregarFornecedores();
             } catch (error) {
-                console.error("Erro ao eliminar", error);
+                mostrarPopup('Erro ao excluir fornecedor.', 'erro');
+                console.error("Erro ao excluir fornecedor", error);
             }
         }
     };
 
+    const popupStyle = {
+        position: 'fixed',
+        top: '20px',
+        right: '20px',
+        padding: '15px 25px',
+        borderRadius: '8px',
+        color: 'white',
+        fontWeight: 'bold',
+        boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+        zIndex: 1000,
+        transition: 'opacity 0.3s ease-in-out',
+        opacity: popup.visivel ? 1 : 0,
+        pointerEvents: popup.visivel ? 'auto' : 'none',
+        backgroundColor: popup.tipo === 'sucesso' ? '#0f766e' : '#dc2626',
+    };
+
     return (
         <div className="fornecedores-container">
+            
+            <div style={popupStyle}>
+                {popup.tipo === 'sucesso' ? '✅ ' : '⚠️ '}
+                {popup.mensagem}
+            </div>
+
             <h1 className="fornecedores-titulo">Gestão de Fornecedores</h1>
             <p className="fornecedores-subtitulo">Registe os parceiros que fornecem peças e insumos para a oficina</p>
 

@@ -4,17 +4,25 @@ import '../styles/InsumosPage.css';
 
 export default function InsumosPage() {
   const [insumos, setInsumos] = useState([]);
+  const [editId, setEditId] = useState(null);
+  const [popup, setPopup] = useState({ visivel: false, mensagem: '', tipo: '' });
   const [formData, setFormData] = useState({
     codigo_sku: '',
     nome_insumo: '',
     categoria: '',
     unidade_medida: ''
   });
-  const [editId, setEditId] = useState(null);
 
   useEffect(() => {
     carregarInsumos();
   }, []);
+
+  const mostrarPopup = (mensagem, tipo) => {
+    setPopup({ visivel: true, mensagem, tipo });
+    setTimeout(() => {
+      setPopup({ visivel: false, mensagem: '', tipo: '' });
+    }, 3000);
+  };
 
   const carregarInsumos = async () => {
     try {
@@ -33,18 +41,19 @@ export default function InsumosPage() {
     e.preventDefault();
     try {
       if (editId) {
-        // Atualizar (PUT)
         await api.put(`/insumos/${editId}`, formData);
+        mostrarPopup('Insumo atualizado com sucesso!', 'sucesso');
       } else {
-        // Criar (POST)
         await api.post('/insumos/', formData);
+        mostrarPopup('Insumo gravado com sucesso!', 'sucesso');
       }
       setFormData({ codigo_sku: '', nome_insumo: '', categoria: '', unidade_medida: '' });
       setEditId(null);
       carregarInsumos();
     } catch (error) {
+      const msgErro = error.response?.data?.detail || "Erro ao salvar insumo.";
+      mostrarPopup(msgErro, 'erro');
       console.error("Erro ao salvar insumo", error);
-      alert("Ocorreu um erro ao salvar. Verifique a consola.");
     }
   };
 
@@ -62,15 +71,38 @@ export default function InsumosPage() {
     if (window.confirm("Tem a certeza que deseja excluir este insumo?")) {
       try {
         await api.delete(`/insumos/${id}`);
+        mostrarPopup('Insumo excluído com sucesso!', 'sucesso');
         carregarInsumos();
       } catch (error) {
-        console.error("Erro ao eliminar", error);
+        mostrarPopup('Erro ao excluir insumo.', 'erro');
+        console.error("Erro ao excluir insumo", error);
       }
     }
   };
 
+  const popupStyle = {
+    position: 'fixed',
+    top: '20px',
+    right: '20px',
+    padding: '15px 25px',
+    borderRadius: '8px',
+    color: 'white',
+    fontWeight: 'bold',
+    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+    zIndex: 1000,
+    transition: 'opacity 0.3s ease-in-out',
+    opacity: popup.visivel ? 1 : 0,
+    pointerEvents: popup.visivel ? 'auto' : 'none',
+    backgroundColor: popup.tipo === 'sucesso' ? '#0f766e' : '#dc2626',
+  };
+
   return (
     <div className="insumos-container">
+      <div style={popupStyle}>
+        {popup.tipo === 'sucesso' ? '✅ ' : '⚠️ '}
+        {popup.mensagem}
+      </div>
+
       <h1 className="insumos-titulo">Gestão de Insumos</h1>
       <p className="insumos-subtitulo">Cadastre tintas, lixas, vernizes e outras peças de reposição</p>
 
