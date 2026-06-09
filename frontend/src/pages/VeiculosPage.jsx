@@ -6,10 +6,11 @@ export default function VeiculosPage() {
     const [veiculos, setVeiculos] = useState([]);
     const [formData, setFormData] = useState({
         placa: '',
+        chassi: '',
         marca: '',
         modelo: '',
         ano: '',
-        cor: ''
+        tipo_veiculo: ''
     });
     const [editId, setEditId] = useState(null);
 
@@ -38,7 +39,7 @@ export default function VeiculosPage() {
             } else {
                 await api.post('/veiculos/', formData);
             }
-            setFormData({ placa: '', marca: '', modelo: '', ano: '', cor: '' });
+            setFormData({ placa: '', chassi: '', marca: '', modelo: '', ano: '', tipo_veiculo: '' });
             setEditId(null);
             carregarVeiculos();
         } catch (error) {
@@ -49,10 +50,11 @@ export default function VeiculosPage() {
     const handleEdit = (veiculo) => {
         setFormData({
             placa: veiculo.placa || '',
+            chassi: veiculo.chassi || '',
             marca: veiculo.marca || '',
             modelo: veiculo.modelo || '',
             ano: veiculo.ano || '',
-            cor: veiculo.cor || ''
+            tipo_veiculo: veiculo.tipo_veiculo || ''
         });
         setEditId(veiculo.veiculo_key);
     };
@@ -87,6 +89,11 @@ export default function VeiculosPage() {
                             className="veiculos-input"
                         />
                         <input
+                            type="text" name="chassi" placeholder="Chassi (17 caracteres)"
+                            value={formData.chassi} onChange={handleChange}
+                            className="veiculos-input"
+                        />
+                        <input
                             type="text" name="marca" placeholder="Marca (Ex: Toyota)"
                             value={formData.marca} onChange={handleChange} required
                             className="veiculos-input"
@@ -101,18 +108,21 @@ export default function VeiculosPage() {
                             value={formData.ano} onChange={handleChange} required
                             className="veiculos-input"
                         />
-                        <input
-                            type="text" name="cor" placeholder="Cor"
-                            value={formData.cor} onChange={handleChange} required
-                            className="veiculos-input"
-                        />
+                        <select name="tipo_veiculo" value={formData.tipo_veiculo} onChange={handleChange} required className="veiculos-input">
+                            <option value="">Tipo de Veículo</option>
+                            <option value="Hatch">Hatch</option>
+                            <option value="Sedan">Sedan</option>
+                            <option value="SUV">SUV</option>
+                            <option value="Picape">Picape</option>
+                            <option value="Utilitário">Utilitário</option>
+                        </select>
                     </div>
 
                     <div className="veiculos-botoes">
                         {editId && (
                             <button
                                 type="button"
-                                onClick={() => { setEditId(null); setFormData({ placa: '', marca: '', modelo: '', ano: '', cor: '' }) }}
+                                onClick={() => { setEditId(null); setFormData({ placa: '', chassi: '', marca: '', modelo: '', ano: '', tipo_veiculo: '' }) }}
                                 className="veiculos-btn-cancelar"
                             >
                                 Cancelar
@@ -130,11 +140,12 @@ export default function VeiculosPage() {
                 <table className="veiculos-tabela">
                     <thead>
                         <tr>
-                            <th>Matrícula / Placa</th>
+                            <th>Placa</th>
+                            <th>Chassi</th>
                             <th>Marca</th>
                             <th>Modelo</th>
                             <th>Ano</th>
-                            <th>Cor</th>
+                            <th>Tipo</th>
                             <th className="veiculos-th-acoes">Ações</th>
                         </tr>
                     </thead>
@@ -143,10 +154,11 @@ export default function VeiculosPage() {
                             veiculos.map((veiculo) => (
                                 <tr key={veiculo.veiculo_key} className="veiculos-linha">
                                     <td className="veiculos-td-placa">{veiculo.placa}</td>
+                                    <td>{veiculo.chassi || '-'}</td>
                                     <td>{veiculo.marca}</td>
                                     <td>{veiculo.modelo}</td>
                                     <td>{veiculo.ano}</td>
-                                    <td>{veiculo.cor}</td>
+                                    <td>{veiculo.tipo_veiculo}</td>
                                     <td className="veiculos-td-acoes">
                                         <button onClick={() => handleEdit(veiculo)} className="btn-acao-editar">Editar</button>
                                         <span className="veiculos-separador">|</span>
@@ -156,7 +168,7 @@ export default function VeiculosPage() {
                             ))
                         ) : (
                             <tr>
-                                <td colSpan="6" className="veiculos-td-vazia">
+                                <td colSpan="7" className="veiculos-td-vazia">
                                     Nenhum veículo registado.
                                 </td>
                             </tr>
