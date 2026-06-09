@@ -41,7 +41,7 @@ export default function FornecedoresPage() {
             setEditId(null);
             carregarFornecedores();
         } catch (error) {
-            console.error("Erro ao guardar fornecedor", error);
+            console.error("Erro ao salvar fornecedor", error);
         }
     };
 
@@ -106,7 +106,7 @@ export default function FornecedoresPage() {
                             </button>
                         )}
                         <button type="submit" className="fornecedores-btn-salvar">
-                            {editId ? 'Atualizar Fornecedor' : 'Guardar Fornecedor'}
+                            {editId ? 'Atualizar Fornecedor' : 'Salvar Fornecedor'}
                         </button>
                     </div>
                 </form>

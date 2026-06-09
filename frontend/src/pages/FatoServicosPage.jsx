@@ -96,9 +96,9 @@ export default function FatoServicosPage() {
       if (error.response && error.response.data && error.response.data.detail) {
         alert(error.response.data.detail);
       } else {
-        alert("Erro inesperado ao guardar a ordem de serviço.");
+        alert("Erro inesperado ao salvar a ordem de serviço.");
       }
-      console.error("Erro ao guardar ordem de serviço", error);
+      console.error("Erro ao salvar ordem de serviço", error);
     }
   };
 
@@ -214,7 +214,7 @@ export default function FatoServicosPage() {
               </button>
             )}
             <button type="submit" className="fato-servicos-btn-salvar">
-              {editId ? 'Atualizar Serviço' : 'Guardar Serviço'}
+              {editId ? 'Atualizar Serviço' : 'Salvar Serviço'}
             </button>
           </div>
         </form>

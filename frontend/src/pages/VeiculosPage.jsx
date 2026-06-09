@@ -43,7 +43,7 @@ export default function VeiculosPage() {
             setEditId(null);
             carregarVeiculos();
         } catch (error) {
-            console.error("Erro ao guardar veículo", error);
+            console.error("Erro ao salvar veículo", error);
         }
     };
 
@@ -129,7 +129,7 @@ export default function VeiculosPage() {
                             </button>
                         )}
                         <button type="submit" className="veiculos-btn-salvar">
-                            {editId ? 'Atualizar Veículo' : 'Guardar Veículo'}
+                            {editId ? 'Atualizar Veículo' : 'Salvar Veículo'}
                         </button>
                     </div>
                 </form>

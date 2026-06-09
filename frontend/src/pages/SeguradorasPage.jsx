@@ -41,7 +41,7 @@ export default function SeguradorasPage() {
             setEditId(null);
             carregarSeguradoras();
         } catch (error) {
-            console.error("Erro ao guardar seguradora", error);
+            console.error("Erro ao salvar seguradora", error);
         }
     };
 
@@ -106,7 +106,7 @@ export default function SeguradorasPage() {
                             </button>
                         )}
                         <button type="submit" className="seguradoras-btn-salvar">
-                            {editId ? 'Atualizar Seguradora' : 'Guardar Seguradora'}
+                            {editId ? 'Atualizar Seguradora' : 'Salvar Seguradora'}
                         </button>
                     </div>
                 </form>

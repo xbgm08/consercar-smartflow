@@ -64,7 +64,7 @@ export default function TempoPage() {
             setEditId(null);
             carregarTempos();
         } catch (error) {
-            console.error("Erro ao guardar data", error);
+            console.error("Erro ao salvar data", error);
         }
     };
 
@@ -116,7 +116,7 @@ export default function TempoPage() {
                             </button>
                         )}
                         <button type="submit" className="tempo-btn-salvar">
-                            {editId ? 'Atualizar Data' : 'Guardar Data'}
+                            {editId ? 'Atualizar Data' : 'Salvar Data'}
                         </button>
                     </div>
                 </form>

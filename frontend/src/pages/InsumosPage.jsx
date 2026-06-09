@@ -43,8 +43,8 @@ export default function InsumosPage() {
       setEditId(null);
       carregarInsumos();
     } catch (error) {
-      console.error("Erro ao guardar insumo", error);
-      alert("Ocorreu um erro ao guardar. Verifique a consola.");
+      console.error("Erro ao salvar insumo", error);
+      alert("Ocorreu um erro ao salvar. Verifique a consola.");
     }
   };
 
@@ -115,7 +115,7 @@ export default function InsumosPage() {
               </button>
             )}
             <button type="submit" className="insumos-btn-salvar">
-              {editId ? 'Atualizar Insumo' : 'Guardar Insumo'}
+              {editId ? 'Atualizar Insumo' : 'Salvar Insumo'}
             </button>
           </div>
         </form>

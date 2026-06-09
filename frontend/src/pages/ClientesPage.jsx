@@ -52,7 +52,7 @@ export default function ClientesPage() {
       setEditId(null);
       carregarClientes();
     } catch (error) {
-      console.error("Erro ao guardar cliente", error);
+      console.error("Erro ao salvar cliente", error);
     }
   };
 
@@ -170,7 +170,7 @@ export default function ClientesPage() {
               </button>
             )}
             <button type="submit" className="clientes-btn-salvar">
-              {editId ? 'Atualizar Cliente' : 'Guardar Cliente'}
+              {editId ? 'Atualizar Cliente' : 'Salvar Cliente'}
             </button>
           </div>
         </form>

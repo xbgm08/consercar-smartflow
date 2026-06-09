@@ -40,7 +40,7 @@ export default function ServicosPage() {
             setEditId(null);
             carregarServicos();
         } catch (error) {
-            console.error("Erro ao guardar serviço", error);
+            console.error("Erro ao salvar serviço", error);
         }
     };
 
@@ -99,7 +99,7 @@ export default function ServicosPage() {
                             </button>
                         )}
                         <button type="submit" className="servicos-btn-salvar">
-                            {editId ? 'Atualizar Serviço' : 'Guardar Serviço'}
+                            {editId ? 'Atualizar Serviço' : 'Salvar Serviço'}
                         </button>
                     </div>
                 </form>

@@ -40,7 +40,7 @@ export default function FuncionariosPage() {
             setEditId(null);
             carregarFuncionarios();
         } catch (error) {
-            console.error("Erro ao guardar funcionário", error);
+            console.error("Erro ao salvar funcionário", error);
         }
     };
 
@@ -99,7 +99,7 @@ export default function FuncionariosPage() {
                             </button>
                         )}
                         <button type="submit" className="funcionarios-btn-salvar">
-                            {editId ? 'Atualizar Funcionário' : 'Guardar Funcionário'}
+                            {editId ? 'Atualizar Funcionário' : 'Salvar Funcionário'}
                         </button>
                     </div>
                 </form>

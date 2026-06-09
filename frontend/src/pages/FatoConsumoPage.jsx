@@ -107,7 +107,7 @@ export default function FatoConsumoPage() {
       setEditId(null);
       carregarFatos();
     } catch (error) {
-      console.error("Erro ao guardar registo de consumo", error);
+      console.error("Erro ao salvar registo de consumo", error);
     }
   };
 
@@ -218,7 +218,7 @@ export default function FatoConsumoPage() {
               </button>
             )}
             <button type="submit" className="fato-consumo-btn-salvar">
-              {editId ? 'Atualizar Registo' : 'Guardar Consumo'}
+              {editId ? 'Atualizar Registo' : 'Salvar Consumo'}
             </button>
           </div>
         </form>
