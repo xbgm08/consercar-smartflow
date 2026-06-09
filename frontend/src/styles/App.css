@@ -14,6 +14,9 @@
   padding-right: 1rem;
   color: white;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
 .navbar-links {
@@ -34,9 +37,21 @@
   color: white;
 }
 
+.nav-link-dashboard {
+  color: #38bdf8;
+  margin-left: 10px;
+}
+
+.nav-link-dashboard:hover {
+  color: #7dd3fc;
+}
+
 .home-container {
-  padding: 3rem;
+  padding: 20px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  height: 85vh;
 }
 
 .home-titulo {
@@ -46,4 +61,12 @@
 
 .home-subtitulo {
   color: #64748b;
+}
+
+.home-iframe-wrapper {
+  flex: 1;
+  margin-top: 10px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }

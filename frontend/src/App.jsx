@@ -14,12 +14,13 @@ import PrevisaoEstoquePage from './pages/PrevisaoEstoquePage';
 import './styles/App.css';
 
 function App() {
+  const powerBiUrl = "https://app.powerbi.com/view?r=eyJrIjoiZTlkOTA4N2QtNTZhNS00MGM0LTgyYjQtYjdiNWUxY2EyMDhjIiwidCI6IjE3MGZhMTAxLTQwODgtNDYxNy1hZTFjLTgxYjIzZGRlZjk4MyJ9";
+
   return (
     <BrowserRouter>
       {/* Menu Superior (Navbar) */}
       <nav className="navbar">
-        <h2 className="navbar-logo">SmartFlow</h2>
-
+        <Link to="/" className="navbar-logo">SmartFlow</Link>
         <div className="navbar-links">
           <Link className="nav-link" to="/clientes">Clientes</Link>
           <Link className="nav-link" to="/fornecedores">Fornecedores</Link>
@@ -32,6 +33,15 @@ function App() {
           <Link className="nav-link" to="/ordens-servico">Ordens de Serviço</Link>
           <Link className="nav-link" to="/consumo-insumos">Consumo de Insumos</Link>
           <Link className="nav-link" to="/previsao-estoque">Previsão de Estoque</Link>
+
+          <a
+            className="nav-link nav-link-dashboard"
+            href={powerBiUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Dashboard
+          </a>
         </div>
       </nav>
 
@@ -48,11 +58,22 @@ function App() {
         <Route path="/ordens-servico" element={<FatoServicosPage />} />
         <Route path="/consumo-insumos" element={<FatoConsumoPage />} />
         <Route path="/previsao-estoque" element={<PrevisaoEstoquePage />} />
+
         {/* Rota Inicial */}
         <Route path="/" element={
           <div className="home-container">
             <h1 className="home-titulo">Bem-vindo ao CONSERCAR SmartFlow</h1>
-            <p className="home-subtitulo">Selecione uma opção no menu acima para começar a gerir a oficina.</p>
+            <p className="home-subtitulo">Acompanhe os resultados da oficina em tempo real ou selecione uma opção no menu superior.</p>
+            <div className="home-iframe-wrapper">
+              <iframe
+                title="Dashboard Consercar"
+                width="100%"
+                height="100%"
+                src={powerBiUrl}
+                frameBorder="0"
+                allowFullScreen={true}>
+              </iframe>
+            </div>
           </div>
         } />
       </Routes>
