@@ -6,7 +6,7 @@
 }
 
 .fato-consumo-titulo {
-  color: #1e3a8a;
+  color: #427A77;
   font-size: 2rem;
   margin-bottom: 0.5rem;
 }
@@ -21,12 +21,12 @@
   padding: 1.5rem;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border-top: 4px solid #1e3a8a;
+  border-top: 4px solid #427A77;
   margin-bottom: 2rem;
 }
 
 .fato-consumo-form-titulo {
-  color: #1e3a8a;
+  color: #427A77;
   margin-bottom: 1rem;
 }
 
@@ -62,8 +62,8 @@ select.fato-consumo-input {
 }
 
 .fato-consumo-input:focus {
-  border-color: #1e3a8a;
-  box-shadow: 0 0 0 2px rgba(30, 58, 138, 0.1);
+  border-color: #427A77;
+  box-shadow: 0 0 0 2px rgba(66, 122, 119, 0.1);
 }
 
 .fato-consumo-botoes {
@@ -74,7 +74,7 @@ select.fato-consumo-input {
 }
 
 .fato-consumo-btn-salvar {
-  background-color: #1e3a8a;
+  background-color: #427A77;
   color: white;
   padding: 0.75rem 1.5rem;
   border: none;
@@ -85,7 +85,7 @@ select.fato-consumo-input {
 }
 
 .fato-consumo-btn-salvar:hover {
-  background-color: #172554;
+  background-color: #2f5a57;
 }
 
 .fato-consumo-btn-cancelar {
@@ -117,7 +117,7 @@ select.fato-consumo-input {
 }
 
 .fato-consumo-tabela th {
-  background-color: #1e3a8a;
+  background-color: #427A77;
   color: white;
   padding: 1rem;
   font-weight: 600;
@@ -135,7 +135,7 @@ select.fato-consumo-input {
 
 .fato-consumo-td-destaque {
   font-weight: bold;
-  color: #1e3a8a;
+  color: #427A77;
 }
 
 .fato-consumo-th-acoes,
@@ -144,7 +144,7 @@ select.fato-consumo-input {
 }
 
 .btn-acao-editar {
-  color: #1e3a8a;
+  color: #579a96;
   background: none;
   border: none;
   cursor: pointer;

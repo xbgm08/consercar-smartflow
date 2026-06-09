@@ -5,7 +5,7 @@
 }
 
 .seguradoras-titulo {
-  color: #1e3a8a;
+  color: #427A77;
   font-size: 2rem;
   margin-bottom: 0.5rem;
 }
@@ -15,18 +15,17 @@
   margin-bottom: 2rem;
 }
 
-/* Formulário */
 .seguradoras-card-form {
   background-color: #ffffff;
   padding: 1.5rem;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border-top: 4px solid #1e3a8a;
+  border-top: 4px solid #427A77;
   margin-bottom: 2rem;
 }
 
 .seguradoras-form-titulo {
-  color: #1e3a8a;
+  color: #427A77;
   margin-bottom: 1rem;
 }
 
@@ -47,7 +46,7 @@
 }
 
 .seguradoras-input:focus {
-  border-color: #1e3a8a;
+  border-color: #427A77;
 }
 
 .seguradoras-botoes {
@@ -57,7 +56,7 @@
 }
 
 .seguradoras-btn-salvar {
-  background-color: #1e3a8a;
+  background-color: #427A77;
   color: white;
   padding: 0.75rem 1.5rem;
   border: none;
@@ -68,7 +67,7 @@
 }
 
 .seguradoras-btn-salvar:hover {
-  background-color: #172554;
+  background-color: #2f5a57;
 }
 
 .seguradoras-btn-cancelar {
@@ -84,7 +83,6 @@
   background-color: #64748b;
 }
 
-/* Tabela */
 .seguradoras-card-tabela {
   background-color: #ffffff;
   border-radius: 8px;
@@ -99,7 +97,7 @@
 }
 
 .seguradoras-tabela th {
-  background-color: #1e3a8a;
+  background-color: #427A77;
   color: white;
   padding: 1rem;
 }
@@ -116,7 +114,7 @@
 
 .seguradoras-td-razao {
   font-weight: bold;
-  color: #1e3a8a;
+  color: #427A77;
 }
 
 .seguradoras-th-acoes,
@@ -135,7 +133,7 @@
 }
 
 .btn-acao-editar {
-  color: #2563eb;
+  color: #579a96;
   background: none;
   border: none;
   cursor: pointer;

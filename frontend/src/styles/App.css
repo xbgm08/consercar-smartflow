@@ -1,5 +1,5 @@
 .navbar {
-  background-color: #1e3a8a;
+  background-color: #427A77;
   padding: 1rem 2rem;
   display: flex;
   gap: 1.5rem;
@@ -10,7 +10,7 @@
 .navbar-logo {
   margin: 0;
   margin-right: 2rem;
-  border-right: 2px solid #3b82f6;
+  border-right: 2px solid #579a96;
   padding-right: 1rem;
   color: white;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -26,7 +26,7 @@
 }
 
 .nav-link {
-  color: #93c5fd;
+  color: #bcdedc;
   text-decoration: none;
   font-weight: bold;
   font-size: 1.1rem;
@@ -38,12 +38,13 @@
 }
 
 .nav-link-dashboard {
-  color: #38bdf8;
+  color: #8ce3df;
   margin-left: 10px;
+  text-shadow: 0 0 8px rgba(140, 227, 223, 0.3);
 }
 
 .nav-link-dashboard:hover {
-  color: #7dd3fc;
+  color: #b3f0ec;
 }
 
 .home-container {
@@ -55,7 +56,7 @@
 }
 
 .home-titulo {
-  color: #1e3a8a;
+  color: #427A77;
   margin-bottom: 1rem;
 }
 
@@ -69,4 +70,5 @@
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
 }
